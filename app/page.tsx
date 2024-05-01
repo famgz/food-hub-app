@@ -6,9 +6,10 @@ import Search from "./_components/search";
 import { db } from "./_lib/prisma";
 import PromoBanner from "./_components/promo-banner";
 import RestaurantList from "./_components/restaurant-list";
+import { convertToPlainObject } from "./_helpers/utils";
 
 export default async function Home() {
-  const products = await db.product.findMany({
+  let products = await db.product.findMany({
     where: {
       discountPercentage: {
         gt: 0,
@@ -23,6 +24,8 @@ export default async function Home() {
       },
     },
   });
+
+  products = convertToPlainObject(products);
 
   return (
     <>
@@ -44,7 +47,7 @@ export default async function Home() {
       </div>
 
       <div className="section !pr-0">
-        <ProductsList products={products} />
+        <ProductsList title="Pedidos Recomendados" products={products} />
       </div>
 
       <div className="section">
