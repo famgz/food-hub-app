@@ -6,7 +6,7 @@ export default function Search() {
   return (
     <div className="flex gap-2">
       <Input placeholder="Buscar restaurantes" className="border-none" />
-      <Button size="icon">
+      <Button size="icon" className="min-w-10">
         <SearchIcon size={20} className="" />
       </Button>
     </div>
