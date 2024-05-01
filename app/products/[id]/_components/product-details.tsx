@@ -146,12 +146,14 @@ export default function ProductDetails({
       </div>
 
       {/* Extra products / recomendations */}
-      <div className="-mx-5 mt-6 space-y-3 pl-5 ">
-        <ProductsList
-          title="Mais desta categoria"
-          products={complementaryProducts}
-        />
-      </div>
+      {complementaryProducts.length > 0 && (
+        <div className="-mx-5 mt-6 space-y-3 pl-5 ">
+          <ProductsList
+            title="Mais desta categoria"
+            products={complementaryProducts}
+          />
+        </div>
+      )}
     </div>
   );
 }
