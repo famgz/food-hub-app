@@ -39,11 +39,15 @@ export default async function ProductPage({
       category: {
         name: category,
       },
+      restaurant: {
+        id: product.restaurantId,
+      },
     },
     include: {
       restaurant: true,
     },
     take: 10,
+    distinct: "name",
   });
 
   extraProducts = convertToPlainObject(extraProducts);
