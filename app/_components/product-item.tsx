@@ -38,7 +38,7 @@ export default function ProductItem({ product }: ProductItemProps) {
       </div>
 
       <div>
-        <h2 className="mt-1 truncate text-sm font-semibold">{product.name}</h2>
+        <h2 className="mt-2 truncate text-sm font-semibold">{product.name}</h2>
         <div className="flex items-center gap-2">
           <h3 className="font-extrabold ">{formatPrice(finalPrice)}</h3>
           {discount > 0 && (
