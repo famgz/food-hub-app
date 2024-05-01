@@ -34,6 +34,7 @@ export default async function ProductPage({
 
   let category = (product?.category.name || "Sucos") as string;
 
+  // other products from same restaurant/productCategory
   let extraProducts = await db.product.findMany({
     where: {
       category: {
@@ -62,12 +63,15 @@ export default async function ProductPage({
           fill
           className="object-cover"
         />
-
-        {/* Return button */}
         <BackButton />
       </div>
 
-      <ProductDetails product={product} complementaryProducts={extraProducts} />
+      <div className="relative z-50 -mt-5 overflow-hidden rounded-tl-3xl rounded-tr-3xl bg-background">
+        <ProductDetails
+          product={product}
+          complementaryProducts={extraProducts}
+        />
+      </div>
     </div>
   );
 }
