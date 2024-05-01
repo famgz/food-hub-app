@@ -154,6 +154,8 @@ export default function ProductDetails({
           />
         </div>
       )}
+
+      <Button className="mt-3 w-full">Adicionar à Sacola</Button>
     </div>
   );
 }
