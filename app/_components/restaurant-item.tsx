@@ -7,18 +7,23 @@ import { Button } from "./ui/button";
 import LikeButton from "./like-button";
 import RatingBadge from "./rating-badge";
 import DeliveryIcon from "./icons/delivery-icon";
+import { cn } from "../_lib/utils";
 
 interface RestaurantItemProps {
   restaurant: Restaurant;
+  className?: string;
 }
 
-export default function RestaurantItem({ restaurant }: RestaurantItemProps) {
+export default function RestaurantItem({
+  restaurant,
+  className,
+}: RestaurantItemProps) {
   const deliveryFee = Number(restaurant.deliveryFee);
 
   return (
     <Link
       href={`/restaurants/${restaurant.id}`}
-      className="min-w-[266px] max-w-[266px]"
+      className={cn("min-w-[266px] max-w-[266px]", className)}
     >
       <div className="relative h-[150px] w-full overflow-hidden rounded-lg shadow-md">
         <Image
