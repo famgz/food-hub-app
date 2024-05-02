@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { calculateProductTotalPrice, formatPrice } from "../_helpers/price";
 import DiscountBadge from "./discount-badge";
+import { cn } from "../_lib/utils";
 
 interface ProductItemProps {
   product: Prisma.ProductGetPayload<{
@@ -17,11 +18,13 @@ interface ProductItemProps {
     };
   }>;
   showRestaurantName?: boolean;
+  className?: string;
 }
 
 export default function ProductItem({
   product,
   showRestaurantName = true,
+  className,
 }: ProductItemProps) {
   const price = Number(product.price);
   const discountPercentage = Number(product.discountPercentage);
@@ -29,9 +32,12 @@ export default function ProductItem({
 
   return (
     // Prefer Link over Route due to the Link's pre-fetch
-    <Link className="min-w-[150px]" href={`/products/${product.id}`}>
+    <Link
+      className={cn("w-[150px] min-w-[150px]", className)}
+      href={`/products/${product.id}`}
+    >
       <div className="w-full min-w-[150px]">
-        <div className="relative h-[150px] w-full overflow-hidden rounded-lg shadow-md">
+        <div className="relative aspect-square w-full overflow-hidden rounded-lg shadow-md">
           <Image
             src={product.imageUrl}
             alt={product.name}

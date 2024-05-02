@@ -18,7 +18,7 @@ export default async function RestaurantList({
         <Link href="/restaurants/recommended">
           <Button
             variant="ghost"
-            className="p-0 pr-5 text-primary hover:bg-transparent"
+            className="p-0 pr-5 font-semibold text-primary hover:bg-transparent"
           >
             Ver todos
             <ChevronRightIcon size={16} />
