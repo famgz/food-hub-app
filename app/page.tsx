@@ -1,12 +1,11 @@
-import Image from "next/image";
 import CategoryList from "./_components/category-list";
 import Header from "./_components/header";
 import ProductsList from "./_components/products-list";
-import Search from "./_components/search";
-import { db } from "./_lib/prisma";
 import PromoBanner from "./_components/promo-banner";
 import RestaurantList from "./_components/restaurant-list";
+import Search from "./_components/search";
 import { convertToPlainObject } from "./_helpers/utils";
+import { db } from "./_lib/prisma";
 
 export default async function Home() {
   let products = await db.product.findMany({
@@ -23,7 +22,12 @@ export default async function Home() {
     distinct: "name",
   });
 
+  let restaurants = await db.restaurant.findMany({
+    take: 10,
+  });
+
   products = convertToPlainObject(products);
+  restaurants = convertToPlainObject(restaurants);
 
   return (
     <>
@@ -56,7 +60,7 @@ export default async function Home() {
       </div>
 
       <div className="section !pr-0">
-        <RestaurantList />
+        <RestaurantList restaurants={restaurants} />
       </div>
     </>
   );
