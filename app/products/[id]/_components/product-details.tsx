@@ -1,16 +1,14 @@
 "use client";
 
-import DeliveryIcon from "@/app/_components/icons/delivery-icon";
+import DeliveryInfoCard from "@/app/_components/delivery-info-card";
 import DiscountBadge from "@/app/_components/discount-badge";
 import ProductsList from "@/app/_components/products-list";
 import { Button } from "@/app/_components/ui/button";
-import { Card } from "@/app/_components/ui/card";
 import { calculateProductTotalPrice, formatPrice } from "@/app/_helpers/price";
 import { Prisma } from "@prisma/client";
-import { ChevronLeftIcon, ChevronRightIcon, TimerIcon } from "lucide-react";
+import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
-import DeliveryInfoCard from "@/app/_components/delivery-info-card";
 
 interface ProductDetailsProps {
   product: Prisma.ProductGetPayload<{
@@ -22,6 +20,7 @@ interface ProductDetailsProps {
   complementaryProducts: Prisma.ProductGetPayload<{
     include: {
       restaurant: true;
+      category: true;
     };
   }>[];
 }
@@ -108,11 +107,12 @@ export default function ProductDetails({
         </div>
       </div>
 
-      {/* Delivery info */}
-      <DeliveryInfoCard
-        deliveryFee={deliveryFee}
-        deliveryTimeMinutes={restaurant.deliveryTimeMinutes}
-      />
+      <div className="mt-5">
+        <DeliveryInfoCard
+          deliveryFee={deliveryFee}
+          deliveryTimeMinutes={restaurant.deliveryTimeMinutes}
+        />
+      </div>
 
       {/* Product description */}
       <div className="mt-6 space-y-3">

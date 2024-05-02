@@ -16,9 +16,13 @@ interface ProductItemProps {
       };
     };
   }>;
+  showRestaurantName?: boolean;
 }
 
-export default function ProductItem({ product }: ProductItemProps) {
+export default function ProductItem({
+  product,
+  showRestaurantName = true,
+}: ProductItemProps) {
   const price = Number(product.price);
   const discountPercentage = Number(product.discountPercentage);
   const finalPrice = calculateProductTotalPrice(product);
@@ -57,9 +61,11 @@ export default function ProductItem({ product }: ProductItemProps) {
             )}
           </div>
 
-          <span className="block text-xs text-muted-foreground">
-            {product.restaurant.name}
-          </span>
+          {showRestaurantName && (
+            <span className="block text-xs text-muted-foreground">
+              {product.restaurant.name}
+            </span>
+          )}
         </div>
       </div>
     </Link>

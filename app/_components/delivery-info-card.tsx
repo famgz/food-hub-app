@@ -13,7 +13,7 @@ export default function DeliveryInfoCard({
   deliveryTimeMinutes,
 }: DeliveryInfoCardProps) {
   return (
-    <Card className="mt-6 flex justify-around py-4">
+    <Card className="flex justify-around py-4">
       {/* Delivery fee */}
       <div className="text-center">
         <div className="mb-1 flex items-center gap-2 text-muted-foreground">

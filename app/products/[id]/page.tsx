@@ -46,6 +46,7 @@ export default async function ProductPage({
     },
     include: {
       restaurant: true,
+      category: true,
     },
     take: 10,
     distinct: "name",
