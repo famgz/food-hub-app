@@ -29,15 +29,16 @@ export default function ProductsList({
       <div className="flex items-center justify-between">
         <h2 className="font-semibold">{title}</h2>
         {showMore && (
-          <Link href={goTo}>
-            <Button
-              variant="ghost"
-              className="p-0 pr-5 font-semibold text-primary hover:bg-transparent"
-            >
+          <Button
+            variant="ghost"
+            className="p-0 pr-5 font-semibold text-primary hover:bg-transparent"
+            asChild
+          >
+            <Link href={goTo}>
               Ver todos
               <ChevronRightIcon size={16} />
-            </Button>
-          </Link>
+            </Link>
+          </Button>
         )}
       </div>
       <div className="section-scroll mt-1">
