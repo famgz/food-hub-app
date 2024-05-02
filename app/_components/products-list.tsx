@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import { ChevronRightIcon } from "lucide-react";
 import ProductItem from "./product-item";
 import { Button } from "./ui/button";
+import Link from "next/link";
 
 interface ProductsListProps {
   title: string;
@@ -13,6 +14,7 @@ interface ProductsListProps {
   }>[];
   showRestaurantName?: boolean;
   showMore?: boolean;
+  goTo?: string;
 }
 
 export default function ProductsList({
@@ -20,19 +22,22 @@ export default function ProductsList({
   products,
   showRestaurantName = true,
   showMore = true,
+  goTo = "/",
 }: ProductsListProps) {
   return (
     <>
       <div className="flex items-center justify-between">
         <h2 className="font-semibold">{title}</h2>
         {showMore && (
-          <Button
-            variant="ghost"
-            className="p-0 pr-5 font-semibold text-primary hover:bg-transparent"
-          >
-            Ver todos
-            <ChevronRightIcon size={16} />
-          </Button>
+          <Link href={goTo}>
+            <Button
+              variant="ghost"
+              className="p-0 pr-5 font-semibold text-primary hover:bg-transparent"
+            >
+              Ver todos
+              <ChevronRightIcon size={16} />
+            </Button>
+          </Link>
         )}
       </div>
       <div className="section-scroll mt-1">

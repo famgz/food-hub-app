@@ -30,7 +30,7 @@ export default async function Home() {
   restaurants = convertToPlainObject(restaurants);
 
   return (
-    <>
+    <div className="mx-auto max-w-[1024px]">
       <Header />
 
       <div className="section">
@@ -49,7 +49,11 @@ export default async function Home() {
       </div>
 
       <div className="section !pr-0">
-        <ProductsList title="Pedidos Recomendados" products={products} />
+        <ProductsList
+          title="Pedidos Recomendados"
+          products={products}
+          goTo="/products/recommended"
+        />
       </div>
 
       <div className="section">
@@ -62,6 +66,6 @@ export default async function Home() {
       <div className="section !pr-0">
         <RestaurantList restaurants={restaurants} />
       </div>
-    </>
+    </div>
   );
 }

@@ -4,15 +4,15 @@ import { convertToPlainObject } from "@/app/_helpers/utils";
 import { db } from "@/app/_lib/prisma";
 import { notFound } from "next/navigation";
 
-interface categoryPageProps {
+interface CategoryPageProps {
   params: {
     id: string;
   };
 }
 
-export default async function categoryPage({
+export default async function CategoryPage({
   params: { id },
-}: categoryPageProps) {
+}: CategoryPageProps) {
   let category = await db.category.findUnique({
     where: {
       id,
