@@ -97,16 +97,18 @@ export default async function RestaurantDetails({
       )}
 
       {/* Products by categories */}
-      {Object.entries(productsByCategory).map(([category, products]) => (
-        <div key={category} className="-mx-5 mt-6 space-y-3 pl-5 ">
-          <ProductsList
-            title={category}
-            products={products}
-            showRestaurantName={false}
-            showMore={false}
-          />
-        </div>
-      ))}
+      {Object.entries(productsByCategory)
+        .reverse()
+        .map(([category, products]) => (
+          <div key={category} className="-mx-5 mt-6 space-y-3 pl-5 ">
+            <ProductsList
+              title={category}
+              products={products}
+              showRestaurantName={false}
+              showMore={false}
+            />
+          </div>
+        ))}
     </div>
   );
 }
