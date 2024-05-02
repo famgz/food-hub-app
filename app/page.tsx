@@ -30,7 +30,7 @@ export default async function Home() {
   restaurants = convertToPlainObject(restaurants);
 
   return (
-    <div className="mx-auto max-w-[1024px]">
+    <div className="">
       <Header />
 
       <div className="section">
