@@ -1,11 +1,14 @@
 "use client";
 
-import { Prisma, Product } from "@prisma/client";
-import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
+import { Prisma } from "@prisma/client";
+import { ReactNode, createContext, useMemo, useState } from "react";
 import { calculateProductTotalPrice } from "../_helpers/price";
 
-export interface CartProduct
-  extends Prisma.ProductGetPayload<{ include: { restaurant: true } }> {
+type Product = Prisma.ProductGetPayload<{
+  include: { restaurant: true; category: true };
+}>;
+
+export interface CartProduct extends Product {
   quantity: number;
 }
 
@@ -53,7 +56,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
       products.forEach((p) => {
         gross += Number(p.price) * p.quantity;
-        net += calculateProductTotalPrice(p) * p.quantity;
+        net +=
+          calculateProductTotalPrice(p.price, p.discountPercentage) *
+          p.quantity;
       });
 
       let discount = net - gross;
@@ -63,10 +68,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
         net,
         discount,
       });
-      console.log({ products, totals });
+      // console.log({ products, totals });
     }
 
     calculateTotals();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [products]);
 
   function addToCart(product: Product, quantity: number) {

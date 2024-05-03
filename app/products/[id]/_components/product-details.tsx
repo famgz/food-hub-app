@@ -44,7 +44,10 @@ export default function ProductDetails({
 
   const price = Number(product.price);
   const discountPercentage = Number(product.discountPercentage);
-  const finalPrice = calculateProductTotalPrice(product);
+  const finalPrice = calculateProductTotalPrice(
+    product.price,
+    product.discountPercentage,
+  );
 
   const restaurant = product.restaurant;
   const deliveryFee = Number(restaurant.deliveryFee);

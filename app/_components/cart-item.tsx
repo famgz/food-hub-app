@@ -1,14 +1,9 @@
+import { ChevronLeftIcon, ChevronRightIcon, Trash2Icon } from "lucide-react";
 import Image from "next/image";
+import { useContext } from "react";
 import { CartContext, CartProduct } from "../_context/cart";
-import {
-  ChevronLeftIcon,
-  ChevronRightIcon,
-  Trash2Icon,
-  TrashIcon,
-} from "lucide-react";
 import { calculateProductTotalPrice, formatPrice } from "../_helpers/price";
 import { Button } from "./ui/button";
-import { useContext } from "react";
 
 interface CartItemProps {
   cartProduct: CartProduct;
@@ -17,7 +12,10 @@ interface CartItemProps {
 export default function CartItem({ cartProduct }: CartItemProps) {
   const price = Number(cartProduct.price);
   const discountPercentage = Number(cartProduct.discountPercentage);
-  const finalPrice = calculateProductTotalPrice(cartProduct);
+  const finalPrice = calculateProductTotalPrice(
+    cartProduct.price,
+    cartProduct.discountPercentage,
+  );
 
   const {
     decreaseProductQuantity,

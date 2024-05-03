@@ -28,7 +28,10 @@ export default function ProductItem({
 }: ProductItemProps) {
   const price = Number(product.price);
   const discountPercentage = Number(product.discountPercentage);
-  const finalPrice = calculateProductTotalPrice(product);
+  const finalPrice = calculateProductTotalPrice(
+    product.price,
+    product.discountPercentage,
+  );
 
   return (
     // Prefer Link over Route due to the Link's pre-fetch

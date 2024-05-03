@@ -1,14 +1,17 @@
-import { Product } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 
-export function calculateProductTotalPrice(product: Product): number {
-  const price = Number(product.price);
-  let discount = Number(product.discountPercentage);
+export function calculateProductTotalPrice(
+  price: Prisma.Decimal | number,
+  discountPercentage: Prisma.Decimal | number,
+): number {
+  price = Number(price);
+  discountPercentage = Number(discountPercentage);
 
-  if (product.discountPercentage === 0) {
+  if (discountPercentage === 0) {
     return price;
   }
-  discount = price * (product.discountPercentage / 100);
-  return Number(price) - discount;
+  discountPercentage = price * (discountPercentage / 100);
+  return Number(price) - discountPercentage;
 }
 
 export function formatPrice(price: number) {
