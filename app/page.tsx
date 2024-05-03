@@ -30,7 +30,7 @@ export default async function Home() {
   restaurants = convertToPlainObject(restaurants);
 
   return (
-    <div className="">
+    <div className="pb-4">
       <Header />
 
       <div className="section">

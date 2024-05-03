@@ -1,13 +1,9 @@
 import BackButton from "@/app/_components/back-button";
-import DiscountBadge from "@/app/_components/discount-badge";
-import { Button } from "@/app/_components/ui/button";
-import { calculateProductTotalPrice, formatPrice } from "@/app/_helpers/price";
+import { convertToPlainObject } from "@/app/_helpers/utils";
 import { db } from "@/app/_lib/prisma";
-import { ChevronLeftIcon } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import ProductDetails from "./_components/product-details";
-import { convertToPlainObject } from "@/app/_helpers/utils";
 
 interface ProductPageProps {
   params: {
