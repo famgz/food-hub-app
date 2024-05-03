@@ -4,6 +4,16 @@ import Cart from "@/app/_components/cart";
 import DeliveryInfoCard from "@/app/_components/delivery-info-card";
 import DiscountBadge from "@/app/_components/discount-badge";
 import ProductsList from "@/app/_components/products-list";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/app/_components/ui/alert-dialog";
 import { Button } from "@/app/_components/ui/button";
 import {
   Sheet,
@@ -16,6 +26,7 @@ import { calculateProductTotalPrice, formatPrice } from "@/app/_helpers/price";
 import { Prisma } from "@prisma/client";
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import { useContext, useState } from "react";
 
 interface ProductDetailsProps {
@@ -38,9 +49,11 @@ export default function ProductDetails({
   complementaryProducts,
 }: ProductDetailsProps) {
   const [quantity, setQuantity] = useState(1);
-  const { products, addToCart } = useContext(CartContext);
-
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] =
+    useState(false);
+
+  const { cartProducts, addProductToCart } = useContext(CartContext);
 
   const price = Number(product.price);
   const discountPercentage = Number(product.discountPercentage);
@@ -52,9 +65,21 @@ export default function ProductDetails({
   const restaurant = product.restaurant;
   const deliveryFee = Number(restaurant.deliveryFee);
 
-  function handleAddToCartClick() {
-    addToCart(product, quantity);
+  function addToCart() {
+    addProductToCart(product, quantity);
     setIsCartOpen(true);
+  }
+
+  function handleAddToCartClick() {
+    const hasDifferentRestaurantProduct = cartProducts.some(
+      (p) => p.restaurantId !== product.restaurantId,
+    );
+
+    if (hasDifferentRestaurantProduct) {
+      return setIsConfirmationDialogOpen(true);
+    }
+
+    addToCart();
   }
 
   function increaseQuantity() {
@@ -72,18 +97,23 @@ export default function ProductDetails({
     <>
       <div className="p-5">
         {/* Title and price */}
-        <div className="flex items-center gap-[0.375rem]">
-          <div className="relative size-6 overflow-hidden rounded-full">
-            <Image
-              src={product.restaurant.imageUrl}
-              alt={product.restaurant.name}
-              fill
-              className="object-cover"
-            />
-          </div>
-          <span className="text-xs text-muted-foreground">
-            {product.restaurant.name}
-          </span>
+        <div className="">
+          <Link
+            href={`/restaurants/${product.restaurantId}`}
+            className="flex w-fit items-center gap-[0.375rem]"
+          >
+            <div className="relative size-6 overflow-hidden rounded-full">
+              <Image
+                src={product.restaurant.imageUrl}
+                alt={product.restaurant.name}
+                fill
+                className="object-cover"
+              />
+            </div>
+            <span className="text-xs text-muted-foreground">
+              {product.restaurant.name}
+            </span>
+          </Link>
         </div>
 
         {/* Product name */}
@@ -155,14 +185,35 @@ export default function ProductDetails({
         </Button>
       </div>
 
+      {/* Cart side bar */}
       <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
         <SheetContent className="w-[85%] max-w-[400px]">
           <SheetHeader>
-            <SheetTitle className="text-left">Sacola</SheetTitle>
+            <SheetTitle className="mb-3 text-center">Sacola</SheetTitle>
           </SheetHeader>
           <Cart />
         </SheetContent>
       </Sheet>
+
+      {/* Clear cart confirmation modal */}
+      <AlertDialog
+        open={isConfirmationDialogOpen}
+        onOpenChange={setIsConfirmationDialogOpen}
+      >
+        <AlertDialogContent>
+          <AlertDialogHeader>
+            <AlertDialogTitle>Ops, sua sacola não está vazia!</AlertDialogTitle>
+            <AlertDialogDescription>
+              Deseja mesmo adicionar este item? Esta ação irá remover produtos
+              de outros restaurantes da sua sacola.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel>Cancelar</AlertDialogCancel>
+            <AlertDialogAction onClick={addToCart}>Continuar</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
     </>
   );
 }

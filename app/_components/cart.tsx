@@ -3,62 +3,76 @@ import { CartContext } from "../_context/cart";
 import { formatPrice } from "../_helpers/price";
 import CartItem from "./cart-item";
 import { Button } from "./ui/button";
+import Image from "next/image";
 
 export default function Cart() {
-  const { products, totals } = useContext(CartContext);
-  const deliveryFee = Number(products[0]?.restaurant?.deliveryFee) || 0;
+  const { cartProducts, totals } = useContext(CartContext);
+  const restaurant = cartProducts[0]?.restaurant;
+  const deliveryFee = Number(restaurant?.deliveryFee || 0);
 
+  if (cartProducts.length === 0) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <p>A sacola está vazia</p>
+      </div>
+    );
+  }
   return (
-    <>
-      {products.length > 0 ? (
-        <div className="flex h-full flex-col justify-between pb-8 pt-5">
-          {/* Cart items */}
-          <div className="space-y-4">
-            {products.map((p) => (
-              <CartItem key={p.id} cartProduct={p} />
-            ))}
+    <div className="flex h-full flex-col">
+      {/* Restaurant */}
+      <div className="flex items-center gap-[0.375rem]">
+        <div className="relative size-5 overflow-hidden rounded-full">
+          <Image
+            src={restaurant.imageUrl}
+            alt={restaurant.name}
+            fill
+            className="object-cover"
+          />
+        </div>
+        <p className="text-sm font-semibold">{restaurant.name}</p>
+      </div>
+
+      {/* Cart items */}
+      <div className="mt-5 flex-auto space-y-4">
+        {cartProducts.map((p) => (
+          <CartItem key={p.id} cartProduct={p} />
+        ))}
+      </div>
+
+      {/* Checkout details */}
+      <div className="mt-3 space-y-4">
+        {/* Totals */}
+        <div className="flex flex-col gap-2 rounded-2xl border bg-white p-5">
+          {/* Subtotal */}
+          <div className="flex justify-between border-b pb-2 text-xs">
+            <span className="text-muted-foreground">Subtotal</span>
+            <span className="">{formatPrice(totals.gross)}</span>
           </div>
-
-          {/* Checkout details */}
-          <div className="space-y-4">
-            {/* Totals */}
-            <div className="flex flex-col gap-2 rounded-2xl border bg-white p-5">
-              {/* Subtotal */}
-              <div className="flex justify-between border-b pb-2 text-sm">
-                <span className="text-muted-foreground">Subtotal</span>
-                <span className="">{formatPrice(totals.gross)}</span>
-              </div>
-              {/* Delivery fee */}
-              <div className="flex justify-between border-b  pb-2 text-sm">
-                <span className="text-muted-foreground">Entrega</span>
-                {deliveryFee > 0 ? (
-                  <span className="">{formatPrice(Number(deliveryFee))}</span>
-                ) : (
-                  <span className=" uppercase text-primary">Grátis</span>
-                )}
-              </div>
-              {/* Discounts */}
-              <div className="flex justify-between border-b  pb-2 text-sm">
-                <span className="text-muted-foreground">Descontos</span>
-                <span className="">{formatPrice(totals.discount)}</span>
-              </div>
-              {/* Total */}
-              <div className="flex justify-between font-semibold ">
-                <span className="">Total</span>
-                <span className="font-semibold">{formatPrice(totals.net)}</span>
-              </div>
-            </div>
-
-            <Button variant={"default"} className="w-full">
-              Finalizar Pedido
-            </Button>
+          {/* Delivery fee */}
+          <div className="flex justify-between border-b  pb-2 text-xs">
+            <span className="text-muted-foreground">Entrega</span>
+            {deliveryFee > 0 ? (
+              <span className="">{formatPrice(Number(deliveryFee))}</span>
+            ) : (
+              <span className=" uppercase text-primary">Grátis</span>
+            )}
+          </div>
+          {/* Discounts */}
+          <div className="flex justify-between border-b  pb-2 text-xs">
+            <span className="text-muted-foreground">Descontos</span>
+            <span className="">{formatPrice(totals.discount)}</span>
+          </div>
+          {/* Total */}
+          <div className="flex justify-between text-sm font-semibold">
+            <span className="">Total</span>
+            <span className="font-semibold">{formatPrice(totals.net)}</span>
           </div>
         </div>
-      ) : (
-        <div className="flex h-full items-center justify-center">
-          <p>A sacola está vazia</p>
-        </div>
-      )}
-    </>
+
+        <Button variant={"default"} className="w-full">
+          Finalizar Pedido
+        </Button>
+      </div>
+    </div>
   );
 }

@@ -20,7 +20,7 @@ export default function CartItem({ cartProduct }: CartItemProps) {
   const {
     decreaseProductQuantity,
     increaseProductQuantity,
-    removeFromCart,
+    removeProductFromCart,
     maxProductQuantity,
   } = useContext(CartContext);
 
@@ -35,7 +35,7 @@ export default function CartItem({ cartProduct }: CartItemProps) {
   }
 
   function handleRemoveProductClick() {
-    removeFromCart(cartProduct.id);
+    removeProductFromCart(cartProduct.id);
   }
 
   return (

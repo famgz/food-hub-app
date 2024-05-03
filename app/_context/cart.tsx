@@ -13,12 +13,13 @@ export interface CartProduct extends Product {
 }
 
 interface ICartContext {
-  products: CartProduct[];
+  cartProducts: CartProduct[];
   maxProductQuantity: number;
-  addToCart: (product: Product, quantity: number) => void;
-  removeFromCart: (productId: string) => void;
+  addProductToCart: (product: Product, quantity: number) => void;
+  removeProductFromCart: (productId: string) => void;
   decreaseProductQuantity: (productId: string) => void;
   increaseProductQuantity: (productId: string) => void;
+  clearCart: () => void;
   totals: {
     gross: number;
     net: number;
@@ -27,12 +28,13 @@ interface ICartContext {
 }
 
 export const CartContext = createContext<ICartContext>({
-  products: [],
+  cartProducts: [],
   maxProductQuantity: 50,
-  addToCart: () => {},
-  removeFromCart: () => {},
+  addProductToCart: () => {},
+  removeProductFromCart: () => {},
   decreaseProductQuantity: () => {},
   increaseProductQuantity: () => {},
+  clearCart: () => {},
   totals: {
     gross: 0,
     net: 0,
@@ -41,7 +43,7 @@ export const CartContext = createContext<ICartContext>({
 });
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [products, setProducts] = useState<CartProduct[]>([]);
+  const [cartProducts, setProducts] = useState<CartProduct[]>([]);
   const [totals, setTotals] = useState({
     gross: 0,
     net: 0,
@@ -54,7 +56,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       let gross = 0;
       let net = 0;
 
-      products.forEach((p) => {
+      cartProducts.forEach((p) => {
         gross += Number(p.price) * p.quantity;
         net +=
           calculateProductTotalPrice(p.price, p.discountPercentage) *
@@ -73,11 +75,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     calculateTotals();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [products]);
+  }, [cartProducts]);
 
-  function addToCart(product: Product, quantity: number) {
-    const isOnCart = products.some((p) => p.id === product.id);
-    if (isOnCart) {
+  function addProductToCart(product: Product, quantity: number) {
+    const hasDifferentRestaurantProcut = cartProducts.some(
+      (p) => p.restaurantId !== product.restaurantId,
+    );
+
+    if (hasDifferentRestaurantProcut) {
+      clearCart();
+    }
+
+    const isProductAlreadyOnCart = cartProducts.some(
+      (p) => p.id === product.id,
+    );
+
+    if (isProductAlreadyOnCart) {
       return setProducts((prev) =>
         prev.map((p) => {
           if (p.id === product.id) {
@@ -93,12 +106,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
     setProducts((prev) => [...prev, { ...product, quantity }]);
   }
 
-  function removeFromCart(productId: string) {
+  function removeProductFromCart(productId: string) {
     setProducts((prev) => prev.filter((p) => p.id !== productId));
   }
 
   function decreaseProductQuantity(productId: string) {
-    const product = products.find((p) => p.id === productId);
+    const product = cartProducts.find((p) => p.id === productId);
     if (!product || product.quantity <= 1) return;
     setProducts((prev) =>
       prev.map((p) => {
@@ -114,7 +127,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }
 
   function increaseProductQuantity(productId: string) {
-    const product = products.find((p) => p.id === productId);
+    const product = cartProducts.find((p) => p.id === productId);
     if (product && product.quantity > maxProductQuantity) return;
 
     setProducts((prev) =>
@@ -130,14 +143,19 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
   }
 
+  function clearCart() {
+    setProducts([]);
+  }
+
   return (
     <CartContext.Provider
       value={{
-        products,
-        addToCart,
-        removeFromCart,
+        cartProducts,
+        addProductToCart,
+        removeProductFromCart,
         decreaseProductQuantity,
         increaseProductQuantity,
+        clearCart,
         maxProductQuantity,
         totals,
       }}

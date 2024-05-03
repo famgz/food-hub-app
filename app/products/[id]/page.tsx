@@ -51,7 +51,7 @@ export default async function ProductPage({
   extraProducts = convertToPlainObject(extraProducts);
 
   return (
-    <div className="">
+    <div className="pb-5">
       {/* Product image */}
       <div className="relative h-[360px] w-full">
         <Image
