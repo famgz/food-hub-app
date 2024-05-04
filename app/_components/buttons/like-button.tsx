@@ -1,6 +1,6 @@
 import { HeartIcon } from "lucide-react";
-import { Button } from "./ui/button";
-import { cn } from "../_lib/utils";
+import { Button } from "../ui/button";
+import { cn } from "../../_lib/utils";
 
 interface LikeButtonProps {
   iconSize: number;

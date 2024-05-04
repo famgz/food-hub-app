@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { formatPrice } from "../_helpers/price";
 import { Button } from "./ui/button";
-import LikeButton from "./like-button";
+import LikeButton from "./buttons/like-button";
 import RatingBadge from "./rating-badge";
 import DeliveryIcon from "./icons/delivery-icon";
 import { cn } from "../_lib/utils";

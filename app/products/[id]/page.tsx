@@ -1,4 +1,4 @@
-import BackButton from "@/app/_components/back-button";
+import BackButton from "@/app/_components/buttons/back-button";
 import { convertToPlainObject } from "@/app/_helpers/utils";
 import { db } from "@/app/_lib/prisma";
 import Image from "next/image";

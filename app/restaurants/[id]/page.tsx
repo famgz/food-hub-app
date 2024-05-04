@@ -1,5 +1,5 @@
-import BackButton from "@/app/_components/back-button";
-import LikeButton from "@/app/_components/like-button";
+import BackButton from "@/app/_components/buttons/back-button";
+import LikeButton from "@/app/_components/buttons/like-button";
 import { convertToPlainObject } from "@/app/_helpers/utils";
 import { db } from "@/app/_lib/prisma";
 import Image from "next/image";
@@ -35,7 +35,7 @@ export default async function RestaurantPage({
   }
 
   return (
-    <div className="">
+    <div className="pb-20">
       {/* Product image */}
       <div className="relative h-[250px] w-full">
         <Image
