@@ -73,7 +73,9 @@ export default function Cart() {
           {/* Total */}
           <div className="flex justify-between text-sm font-semibold">
             <span className="">Total</span>
-            <span className="font-semibold">{formatPrice(totals.net)}</span>
+            <span className="font-semibold">
+              {formatPrice(totals.net + deliveryFee)}
+            </span>
           </div>
         </div>
 
