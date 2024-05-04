@@ -45,7 +45,9 @@ export const CartContext = createContext<ICartContext>({
 });
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const [cartProducts, setProducts] = useState<CartProduct[]>([]);
+  const localStorageKey = "food-hub-app-cart";
+  const [cartProducts, setProducts] =
+    useState<CartProduct[]>(getLocalStorage());
   const [totals, setTotals] = useState({
     gross: 0,
     net: 0,
@@ -53,12 +55,6 @@ export function CartProvider({ children }: { children: ReactNode }) {
     quantity: 0,
   });
   const maxProductQuantity = 50;
-  const localStorageKey = "food-hub-app";
-
-  function loadLocalStorage(): CartProduct[] {
-    const localData = localStorage.getItem(localStorageKey);
-    return localData ? JSON.parse(localData) : [];
-  }
 
   useMemo(() => {
     function calculateTotals() {
@@ -86,8 +82,22 @@ export function CartProvider({ children }: { children: ReactNode }) {
     }
 
     calculateTotals();
+    updateLocalStorage();
+    console.log("products useEffect action");
+    console.log({ cartProducts });
+    console.log({ storage: getLocalStorage() });
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartProducts]);
+
+  function getLocalStorage(): CartProduct[] {
+    const localData = localStorage.getItem(localStorageKey);
+    return localData ? JSON.parse(localData) : [];
+  }
+
+  function updateLocalStorage() {
+    localStorage.setItem(localStorageKey, JSON.stringify(cartProducts));
+  }
 
   function addProductToCart(product: Product, quantity: number) {
     const hasDifferentRestaurantProcut = cartProducts.some(
