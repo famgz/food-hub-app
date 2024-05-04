@@ -18,11 +18,9 @@ export default function Cart() {
       </div>
     );
   }
+
   return (
-    <div
-      className="flex max-h-[95%] flex-1 flex-col
-    gap-3"
-    >
+    <div className="flex max-h-[95%] flex-1 flex-col gap-3">
       {/* Restaurant */}
       <div className="flex items-center gap-[0.375rem]">
         <div className="relative size-5 overflow-hidden rounded-full">

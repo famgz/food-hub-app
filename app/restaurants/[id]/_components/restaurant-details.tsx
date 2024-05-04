@@ -5,6 +5,7 @@ import { convertToPlainObject } from "@/app/_helpers/utils";
 import { db } from "@/app/_lib/prisma";
 import { Prisma, Product, Restaurant } from "@prisma/client";
 import Image from "next/image";
+import CartBanner from "./cart-banner";
 
 type ProductsByCategory = {
   [category: string]: Prisma.ProductGetPayload<{
@@ -109,6 +110,8 @@ export default async function RestaurantDetails({
             />
           </div>
         ))}
+
+      <CartBanner restaurantId={restaurant.id} />
     </div>
   );
 }
