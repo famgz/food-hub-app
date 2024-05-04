@@ -1,7 +1,7 @@
 "use client";
 
 import { Prisma } from "@prisma/client";
-import { ReactNode, createContext, useMemo, useState } from "react";
+import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
 import { calculateProductTotalPrice } from "../_helpers/price";
 
 type Product = Prisma.ProductGetPayload<{
@@ -45,9 +45,7 @@ export const CartContext = createContext<ICartContext>({
 });
 
 export function CartProvider({ children }: { children: ReactNode }) {
-  const localStorageKey = "food-hub-app-cart";
-  const [cartProducts, setProducts] =
-    useState<CartProduct[]>(getLocalStorage());
+  const [cartProducts, setCartProducts] = useState<CartProduct[]>([]);
   const [totals, setTotals] = useState({
     gross: 0,
     net: 0,
@@ -55,6 +53,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
     quantity: 0,
   });
   const maxProductQuantity = 50;
+  const localStorageKey = "food-hub-app-cart";
+
+  useEffect(() => {
+    const initialCartProducts = getInitialCartProducts();
+    setCartProducts((prev) => {
+      return [...prev, ...initialCartProducts];
+    });
+  }, []);
 
   useMemo(() => {
     function calculateTotals() {
@@ -78,25 +84,27 @@ export function CartProvider({ children }: { children: ReactNode }) {
         discount,
         quantity,
       });
-      // console.log({ products, totals });
     }
 
     calculateTotals();
-    updateLocalStorage();
-    console.log("products useEffect action");
-    console.log({ cartProducts });
-    console.log({ storage: getLocalStorage() });
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cartProducts]);
 
-  function getLocalStorage(): CartProduct[] {
-    const localData = localStorage.getItem(localStorageKey);
-    return localData ? JSON.parse(localData) : [];
-  }
+  useEffect(() => {
+    function updateLocalStorage() {
+      localStorage.setItem(localStorageKey, JSON.stringify(cartProducts));
+    }
 
-  function updateLocalStorage() {
-    localStorage.setItem(localStorageKey, JSON.stringify(cartProducts));
+    if (typeof window !== "undefined") {
+      updateLocalStorage();
+    }
+  }, [cartProducts]);
+
+  function getInitialCartProducts(): CartProduct[] {
+    if (typeof window !== "undefined") {
+      const localData = localStorage.getItem(localStorageKey);
+      return localData ? JSON.parse(localData) : [];
+    }
+    return [];
   }
 
   function addProductToCart(product: Product, quantity: number) {
@@ -113,7 +121,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     );
 
     if (isProductAlreadyOnCart) {
-      return setProducts((prev) =>
+      return setCartProducts((prev) =>
         prev.map((p) => {
           if (p.id === product.id) {
             return {
@@ -125,17 +133,17 @@ export function CartProvider({ children }: { children: ReactNode }) {
         }),
       );
     }
-    setProducts((prev) => [...prev, { ...product, quantity }]);
+    setCartProducts((prev) => [...prev, { ...product, quantity }]);
   }
 
   function removeProductFromCart(productId: string) {
-    setProducts((prev) => prev.filter((p) => p.id !== productId));
+    setCartProducts((prev) => prev.filter((p) => p.id !== productId));
   }
 
   function decreaseProductQuantity(productId: string) {
     const product = cartProducts.find((p) => p.id === productId);
     if (!product || product.quantity <= 1) return;
-    setProducts((prev) =>
+    setCartProducts((prev) =>
       prev.map((p) => {
         if (p.id === productId) {
           return {
@@ -152,7 +160,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     const product = cartProducts.find((p) => p.id === productId);
     if (product && product.quantity > maxProductQuantity) return;
 
-    setProducts((prev) =>
+    setCartProducts((prev) =>
       prev.map((p) => {
         if (p.id === productId) {
           return {
@@ -166,7 +174,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }
 
   function clearCart() {
-    setProducts([]);
+    setCartProducts([]);
   }
 
   return (
