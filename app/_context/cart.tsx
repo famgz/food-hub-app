@@ -24,6 +24,7 @@ interface ICartContext {
     gross: number;
     net: number;
     discount: number;
+    quantity: number;
   };
 }
 
@@ -39,6 +40,7 @@ export const CartContext = createContext<ICartContext>({
     gross: 0,
     net: 0,
     discount: 0,
+    quantity: 0,
   },
 });
 
@@ -48,6 +50,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     gross: 0,
     net: 0,
     discount: 0,
+    quantity: 0,
   });
   const maxProductQuantity = 50;
 
@@ -55,12 +58,14 @@ export function CartProvider({ children }: { children: ReactNode }) {
     function calculateTotals() {
       let gross = 0;
       let net = 0;
+      let quantity = 0;
 
       cartProducts.forEach((p) => {
         gross += Number(p.price) * p.quantity;
         net +=
           calculateProductTotalPrice(p.price, p.discountPercentage) *
           p.quantity;
+        quantity += p.quantity;
       });
 
       let discount = net - gross;
@@ -69,6 +74,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
         gross,
         net,
         discount,
+        quantity,
       });
       // console.log({ products, totals });
     }
