@@ -4,6 +4,7 @@ import { db } from "@/app/_lib/prisma";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import ProductDetails from "./_components/product-details";
+import HomeButton from "@/app/_components/buttons/home-button";
 
 interface ProductPageProps {
   params: {
@@ -61,6 +62,9 @@ export default async function ProductPage({
           className="object-cover"
         />
         <BackButton />
+        <div className="absolute right-4 top-4">
+          <HomeButton />
+        </div>
       </div>
 
       <div className="relative z-50 -mt-5 overflow-hidden rounded-tl-3xl rounded-tr-3xl bg-background">

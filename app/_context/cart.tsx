@@ -53,6 +53,12 @@ export function CartProvider({ children }: { children: ReactNode }) {
     quantity: 0,
   });
   const maxProductQuantity = 50;
+  const localStorageKey = "food-hub-app";
+
+  function loadLocalStorage(): CartProduct[] {
+    const localData = localStorage.getItem(localStorageKey);
+    return localData ? JSON.parse(localData) : [];
+  }
 
   useMemo(() => {
     function calculateTotals() {
