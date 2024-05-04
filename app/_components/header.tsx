@@ -1,7 +1,8 @@
-import Image from "next/image";
-import { Button } from "./ui/button";
 import { MenuIcon } from "lucide-react";
+import Image from "next/image";
 import Link from "next/link";
+import CartButton from "./buttons/cart-button";
+import { Button } from "./ui/button";
 
 export default function Header() {
   return (
@@ -9,13 +10,16 @@ export default function Header() {
       <Link href="/">
         <Image src="/logo.svg" alt="Food Hub" height={30} width={100} />
       </Link>
-      <Button
-        size="icon"
-        variant="outline"
-        className="border-none bg-transparent"
-      >
-        <MenuIcon />
-      </Button>
+      <div className="space-x-2">
+        <CartButton />
+        <Button
+          size="icon"
+          variant="outline"
+          className="border-none bg-transparent"
+        >
+          <MenuIcon />
+        </Button>
+      </div>
     </div>
   );
 }
