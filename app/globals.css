@@ -69,3 +69,7 @@
 .hide-scrollbar {
   @apply [&::-webkit-scrollbar]:hidden;
 }
+
+.cart-sheet-content {
+  @apply flex w-[85%] max-w-[400px] flex-col;
+}

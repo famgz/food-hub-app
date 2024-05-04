@@ -187,7 +187,7 @@ export default function ProductDetails({
 
       {/* Cart side bar */}
       <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
-        <SheetContent className="flex w-[85%] max-w-[400px] flex-col">
+        <SheetContent className="cart-sheet-content">
           <SheetHeader>
             <SheetTitle>Sacola</SheetTitle>
           </SheetHeader>

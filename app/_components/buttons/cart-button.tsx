@@ -33,7 +33,7 @@ export default function CartButton() {
           )}
         </SheetTrigger>
       </Button>
-      <SheetContent className="flex w-[85%] max-w-[400px] flex-col">
+      <SheetContent className="cart-sheet-content">
         <SheetHeader>
           <SheetTitle>Sacola</SheetTitle>
         </SheetHeader>
