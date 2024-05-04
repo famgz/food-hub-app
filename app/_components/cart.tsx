@@ -4,6 +4,7 @@ import { formatPrice } from "../_helpers/price";
 import CartItem from "./cart-item";
 import { Button } from "./ui/button";
 import Image from "next/image";
+import { ScrollArea } from "./ui/scroll-area";
 
 export default function Cart() {
   const { cartProducts, totals } = useContext(CartContext);
@@ -18,7 +19,10 @@ export default function Cart() {
     );
   }
   return (
-    <div className="flex h-full flex-col">
+    <div
+      className="flex max-h-[95%] flex-1 flex-col
+    gap-3"
+    >
       {/* Restaurant */}
       <div className="flex items-center gap-[0.375rem]">
         <div className="relative size-5 overflow-hidden rounded-full">
@@ -33,14 +37,18 @@ export default function Cart() {
       </div>
 
       {/* Cart items */}
-      <div className="mt-5 flex-auto space-y-4">
-        {cartProducts.map((p) => (
-          <CartItem key={p.id} cartProduct={p} />
-        ))}
-      </div>
+      {/* <div className="mt-5  flex-auto"> */}
+      <ScrollArea className="min-h-[200px] flex-auto">
+        <div className="space-y-4">
+          {cartProducts.map((p) => (
+            <CartItem key={p.id} cartProduct={p} />
+          ))}
+        </div>
+      </ScrollArea>
+      {/* </div> */}
 
       {/* Checkout details */}
-      <div className="mt-3 space-y-4">
+      <div className="space-y-4">
         {/* Totals */}
         <div className="flex flex-col gap-2 rounded-2xl border bg-white p-5">
           {/* Subtotal */}

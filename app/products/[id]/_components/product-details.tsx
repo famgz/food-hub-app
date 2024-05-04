@@ -172,7 +172,7 @@ export default function ProductDetails({
 
         {/* Extra products / recomendations */}
         {complementaryProducts.length > 0 && (
-          <div className="-mx-5 mt-6 space-y-3 pl-5 ">
+          <div className="-mx-5 mt-6 space-y-3 pl-5">
             <ProductsList
               title="Mais desta categoria"
               products={complementaryProducts}
@@ -187,9 +187,9 @@ export default function ProductDetails({
 
       {/* Cart side bar */}
       <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
-        <SheetContent className="w-[85%] max-w-[400px]">
+        <SheetContent className="flex w-[85%] max-w-[400px] flex-col">
           <SheetHeader>
-            <SheetTitle className="mb-3 text-center">Sacola</SheetTitle>
+            <SheetTitle>Sacola</SheetTitle>
           </SheetHeader>
           <Cart />
         </SheetContent>
