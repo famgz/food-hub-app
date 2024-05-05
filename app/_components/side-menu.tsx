@@ -15,6 +15,7 @@ import {
   UtensilsIcon,
 } from "lucide-react";
 import { useSession } from "next-auth/react";
+import Link from "next/link";
 import LogInButton from "./buttons/login-buton";
 import LogOutButton from "./buttons/logout-buton";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
@@ -64,7 +65,7 @@ export default function SideMenu() {
               ) : (
                 <div className="flex items-center justify-between">
                   <h2 className="font-semibold">Olá. Faça seu login</h2>
-                  <LogInButton />
+                  <LogInButton size="icon" />
                 </div>
               )}
             </div>
@@ -83,9 +84,12 @@ export default function SideMenu() {
                   <Button
                     variant="ghost"
                     className="w-full justify-start gap-3 rounded-full"
+                    asChild
                   >
-                    <ScrollTextIcon size={16} />
-                    <span>Meus pedidos</span>
+                    <Link href="/my-orders">
+                      <ScrollTextIcon size={16} />
+                      <span>Meus pedidos</span>
+                    </Link>
                   </Button>
 
                   <Button

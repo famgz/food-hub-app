@@ -10,7 +10,6 @@ import { formatPrice } from "../_helpers/price";
 import CartItem from "./cart-item";
 import {
   AlertDialog,
-  AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
   AlertDialogDescription,
