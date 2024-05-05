@@ -5,6 +5,9 @@ const nextConfig = {
       {
         hostname: "utfs.io",
       },
+      {
+        hostname: "lh3.googleusercontent.com",
+      },
     ],
   },
 };

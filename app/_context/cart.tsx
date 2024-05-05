@@ -91,12 +91,11 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     function updateLocalStorage() {
-      localStorage.setItem(localStorageKey, JSON.stringify(cartProducts));
+      if (typeof window !== "undefined") {
+        localStorage.setItem(localStorageKey, JSON.stringify(cartProducts));
+      }
     }
-
-    if (typeof window !== "undefined") {
-      updateLocalStorage();
-    }
+    updateLocalStorage();
   }, [cartProducts]);
 
   function getInitialCartProducts(): CartProduct[] {

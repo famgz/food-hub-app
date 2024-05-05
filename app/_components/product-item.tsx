@@ -62,7 +62,7 @@ export default function ProductItem({
             {product.name}
           </h2>
           <div className="flex items-center gap-2">
-            <h3 className="font-extrabold ">{formatPrice(finalPrice)}</h3>
+            <h3 className="font-bold ">{formatPrice(finalPrice)}</h3>
             {discountPercentage > 0 && (
               <span className="text-xs text-muted-foreground line-through">
                 {formatPrice(price)}

@@ -1,8 +1,7 @@
-import { MenuIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import CartButton from "./buttons/cart-button";
-import { Button } from "./ui/button";
+import SideMenu from "./side-menu";
 
 export default function Header() {
   return (
@@ -12,13 +11,7 @@ export default function Header() {
       </Link>
       <div className="space-x-2">
         <CartButton />
-        <Button
-          size="icon"
-          variant="outline"
-          className="border-none bg-transparent"
-        >
-          <MenuIcon />
-        </Button>
+        <SideMenu />
       </div>
     </div>
   );
