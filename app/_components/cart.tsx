@@ -48,9 +48,18 @@ export default function Cart() {
         deliveryFee: deliveryFee,
         deliveryTimeMinutes: restaurant.deliveryTimeMinutes,
         user: { connect: { id: data?.user.id } },
+        products: {
+          createMany: {
+            data: cartProducts.map((p) => ({
+              productId: p.id,
+              quantity: p.quantity,
+            })),
+          },
+        },
       });
 
       clearCart();
+      router.push("/");
 
       // router.push("/");
     } catch (err) {
