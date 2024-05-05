@@ -27,7 +27,7 @@ export default function CartButton() {
         <SheetTrigger>
           <ShoppingCartIcon />
           {totals.quantity > 0 && (
-            <div className="absolute right-0 top-1 flex size-4 items-center justify-center rounded-full bg-primary text-xs text-white">
+            <div className="absolute right-0 top-1 flex size-4 items-center justify-center rounded-full bg-primary text-[10px] text-white">
               {totals.quantity}
             </div>
           )}

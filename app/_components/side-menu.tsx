@@ -47,15 +47,6 @@ export default function SideMenu() {
             <div className="border-b pb-5">
               {data?.user ? (
                 <div className="flex items-center gap-3">
-                  {/* <div className="relative size-12 overflow-hidden rounded-full border-2 border-primary">
-                <Image
-                  src={data.user.image!}
-                  alt="Avatar image"
-                  fill
-                  className="object-cover"
-                />
-              </div> */}
-
                   <Avatar>
                     <AvatarImage src={data.user.image as string} />
                     <AvatarFallback>
@@ -80,28 +71,32 @@ export default function SideMenu() {
 
             <div className="border-b pb-5 ">
               <Button
-                variant="default"
+                variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
               >
-                <HomeIcon size={20} />
+                <HomeIcon size={16} />
                 <span>Início</span>
               </Button>
 
-              <Button
-                variant="ghost"
-                className="w-full justify-start gap-3 rounded-full"
-              >
-                <ScrollTextIcon size={20} />
-                <span>Meus pedidos</span>
-              </Button>
+              {data?.user && (
+                <>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start gap-3 rounded-full"
+                  >
+                    <ScrollTextIcon size={16} />
+                    <span>Meus pedidos</span>
+                  </Button>
 
-              <Button
-                variant="ghost"
-                className="w-full justify-start gap-3 rounded-full"
-              >
-                <HeartIcon size={20} />
-                <span>Restaurantes Favoritos</span>
-              </Button>
+                  <Button
+                    variant="ghost"
+                    className="w-full justify-start gap-3 rounded-full"
+                  >
+                    <HeartIcon size={16} />
+                    <span>Restaurantes Favoritos</span>
+                  </Button>
+                </>
+              )}
             </div>
 
             <div className="border-b pb-5 ">
@@ -109,7 +104,7 @@ export default function SideMenu() {
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
               >
-                <UtensilsIcon size={20} />
+                <UtensilsIcon size={16} />
                 <span>Pratos</span>
               </Button>
 
@@ -117,7 +112,7 @@ export default function SideMenu() {
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
               >
-                <SandwichIcon size={20} />
+                <SandwichIcon size={16} />
                 <span>Lanches</span>
               </Button>
 
@@ -125,7 +120,7 @@ export default function SideMenu() {
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
               >
-                <PizzaIcon size={20} />
+                <PizzaIcon size={16} />
                 <span>Pizzas</span>
               </Button>
 
@@ -133,7 +128,7 @@ export default function SideMenu() {
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
               >
-                <FishIcon size={20} />
+                <FishIcon size={16} />
                 <span>Japonesa</span>
               </Button>
 
@@ -141,7 +136,7 @@ export default function SideMenu() {
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
               >
-                <IceCreamConeIcon size={20} />
+                <IceCreamConeIcon size={16} />
                 <span>Sobremesas</span>
               </Button>
 
@@ -149,7 +144,7 @@ export default function SideMenu() {
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
               >
-                <CherryIcon size={20} />
+                <CherryIcon size={16} />
                 <span>Sucos</span>
               </Button>
 
@@ -157,13 +152,13 @@ export default function SideMenu() {
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
               >
-                <CupSodaIcon size={20} />
+                <CupSodaIcon size={16} />
                 <span>Refrigerantes</span>
               </Button>
             </div>
           </div>
 
-          <LogOutButton text="Sair da Conta" />
+          {data?.user && <LogOutButton text="Sair da Conta" />}
         </div>
       </SheetContent>
     </Sheet>
