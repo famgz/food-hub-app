@@ -3,6 +3,7 @@ import { Inter, Poppins } from "next/font/google";
 import "./globals.css";
 import { CartProvider } from "./_context/cart";
 import AuthProvider from "./_providers/auth";
+import { Toaster } from "@/app/_components/ui/sonner";
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -26,6 +27,7 @@ export default function RootLayout({
         <div className="mx-auto max-w-[678px]">
           <AuthProvider>
             <CartProvider>{children}</CartProvider>
+            <Toaster />
           </AuthProvider>
         </div>
       </body>

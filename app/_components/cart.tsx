@@ -19,14 +19,21 @@ import {
 } from "./ui/alert-dialog";
 import { Button } from "./ui/button";
 import { ScrollArea } from "./ui/scroll-area";
+import { toast } from "sonner";
 
-export default function Cart() {
+interface CartProps {
+  setIsOpen: (isOpen: boolean) => void;
+}
+
+export default function Cart({ setIsOpen }: CartProps) {
   const router = useRouter();
   const [isSubmitLoading, setIsSubmitLoading] = useState(false);
   const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] =
     useState(false);
+
   const { data } = useSession();
   const { cartProducts, totals, clearCart } = useContext(CartContext);
+
   const restaurant = cartProducts[0]?.restaurant;
   const deliveryFee = Number(restaurant?.deliveryFee || 0);
 
@@ -58,10 +65,18 @@ export default function Cart() {
         },
       });
 
-      clearCart();
-      router.push("/");
+      setIsOpen(false);
 
-      // router.push("/");
+      clearCart();
+
+      toast("Pedido Finalizado com sucesso", {
+        description: "Você pode acompanhá-lo na tela dos seus pedidos.",
+        action: (
+          <Button size="sm" onClick={() => router.push("/my-orders")}>
+            Meus Pedidos
+          </Button>
+        ),
+      });
     } catch (err) {
       console.error(err);
     } finally {
@@ -72,7 +87,7 @@ export default function Cart() {
   if (cartProducts.length === 0) {
     return (
       <div className="flex h-full items-center justify-center">
-        <p>A sacola está vazia</p>
+        <p>O carrinho está vazio</p>
       </div>
     );
   }
