@@ -14,7 +14,8 @@ export function calculateProductTotalPrice(
   return Number(price) - discountPercentage;
 }
 
-export function formatPrice(price: number) {
+export function formatPrice(price: Prisma.Decimal | number) {
+  price = Number(price);
   return Intl.NumberFormat("pt-br", {
     style: "currency",
     currency: "BRL",
