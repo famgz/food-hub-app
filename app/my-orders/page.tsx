@@ -4,6 +4,7 @@ import Header from "../_components/header";
 import { db } from "../_lib/prisma";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import OrderItem from "./_components/order-item";
+import { convertToPlainObject } from "../_helpers/utils";
 
 export default async function MyOrdersPage() {
   const session = await getServerSession(authOptions);
@@ -12,7 +13,7 @@ export default async function MyOrdersPage() {
     return redirect("/");
   }
 
-  const orders = await db.order.findMany({
+  let orders = await db.order.findMany({
     where: {
       userId: session.user.id,
     },
@@ -23,6 +24,8 @@ export default async function MyOrdersPage() {
       },
     },
   });
+
+  orders = convertToPlainObject(orders);
 
   return (
     <>

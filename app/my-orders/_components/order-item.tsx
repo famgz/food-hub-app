@@ -64,7 +64,7 @@ export default function OrderItem({ order }: OrderItemProps) {
   async function handleRedoOrderClick() {
     for (const orderProduct of order.products) {
       const product = await getProduct(orderProduct.productId);
-      addProductToCart(product!, orderProduct.quantity);
+      if (product) addProductToCart(product!, orderProduct.quantity);
     }
     router.push(`/restaurants/${order.restaurantId}`);
   }

@@ -10,11 +10,12 @@ import {
   SheetTrigger,
 } from "../ui/sheet";
 import Cart from "../cart";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { CartContext } from "@/app/_context/cart";
 
 export default function CartButton() {
   const { totals } = useContext(CartContext);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   return (
     <Sheet>
@@ -35,9 +36,9 @@ export default function CartButton() {
       </Button>
       <SheetContent className="cart-sheet-content">
         <SheetHeader>
-          <SheetTitle>Sacola</SheetTitle>
+          <SheetTitle>Carrinho</SheetTitle>
         </SheetHeader>
-        <Cart />
+        <Cart setIsOpen={setIsCartOpen} />
       </SheetContent>
     </Sheet>
   );

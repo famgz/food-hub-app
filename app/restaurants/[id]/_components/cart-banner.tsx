@@ -11,7 +11,7 @@ import {
 } from "@/app/_components/ui/sheet";
 import { CartContext } from "@/app/_context/cart";
 import { formatPrice } from "@/app/_helpers/price";
-import { useContext } from "react";
+import { useContext, useState } from "react";
 
 interface CartBannerProps {
   restaurantId: string;
@@ -19,6 +19,7 @@ interface CartBannerProps {
 
 export default function CartBanner({ restaurantId }: CartBannerProps) {
   const { cartProducts, totals } = useContext(CartContext);
+  const [isCartOpen, setIsCartOpen] = useState(false);
 
   const restaurantHasProductsOnCart = cartProducts.some(
     (p) => p.restaurantId === restaurantId,
@@ -46,13 +47,13 @@ export default function CartBanner({ restaurantId }: CartBannerProps) {
         {/* Button */}
         <Sheet>
           <SheetTrigger>
-            <Button size="lg">Ver Sacola</Button>
+            <Button size="lg">Ver Carrinho</Button>
           </SheetTrigger>
           <SheetContent className="cart-sheet-content">
             <SheetHeader>
-              <SheetTitle>Sacola</SheetTitle>
+              <SheetTitle>Carrinho</SheetTitle>
             </SheetHeader>
-            <Cart />
+            <Cart setIsOpen={setIsCartOpen} />
           </SheetContent>
         </Sheet>
       </div>

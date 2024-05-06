@@ -181,7 +181,7 @@ export default function ProductDetails({
         )}
 
         <Button className="mt-3 w-full" onClick={handleAddToCartClick}>
-          Adicionar à Sacola
+          Adicionar ao Carrinho
         </Button>
       </div>
 
@@ -189,9 +189,9 @@ export default function ProductDetails({
       <Sheet open={isCartOpen} onOpenChange={setIsCartOpen}>
         <SheetContent className="cart-sheet-content">
           <SheetHeader>
-            <SheetTitle>Sacola</SheetTitle>
+            <SheetTitle>Carrinho</SheetTitle>
           </SheetHeader>
-          <Cart />
+          <Cart setIsOpen={setIsCartOpen} />
         </SheetContent>
       </Sheet>
 
@@ -202,10 +202,12 @@ export default function ProductDetails({
       >
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Ops, sua sacola não está vazia!</AlertDialogTitle>
+            <AlertDialogTitle>
+              Ops, seu carrinho não está vazio!
+            </AlertDialogTitle>
             <AlertDialogDescription>
               Deseja mesmo adicionar este item? Esta ação irá remover produtos
-              de outros restaurantes da sua sacola.
+              de outros restaurantes do seu carrinho.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
