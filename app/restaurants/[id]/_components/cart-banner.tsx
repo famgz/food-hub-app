@@ -39,7 +39,7 @@ export default function CartBanner({ restaurantId }: CartBannerProps) {
             <span className="text-xs text-muted-foreground">
               {" "}
               / {totals.quantity}
-              {totals.quantity > 1 ? "itens" : "item"}
+              {totals.quantity > 1 ? " itens" : " item"}
             </span>
           </h3>
         </div>

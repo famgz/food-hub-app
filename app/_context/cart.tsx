@@ -4,18 +4,18 @@ import { Prisma } from "@prisma/client";
 import { ReactNode, createContext, useEffect, useMemo, useState } from "react";
 import { calculateProductTotalPrice } from "../_helpers/price";
 
-type Product = Prisma.ProductGetPayload<{
+type IProduct = Prisma.ProductGetPayload<{
   include: { restaurant: true; category: true };
 }>;
 
-export interface CartProduct extends Product {
+export interface CartProduct extends IProduct {
   quantity: number;
 }
 
 interface ICartContext {
   cartProducts: CartProduct[];
   maxProductQuantity: number;
-  addProductToCart: (product: Product, quantity: number) => void;
+  addProductToCart: (product: IProduct, quantity: number) => void;
   removeProductFromCart: (productId: string) => void;
   decreaseProductQuantity: (productId: string) => void;
   increaseProductQuantity: (productId: string) => void;
@@ -106,7 +106,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
     return [];
   }
 
-  function addProductToCart(product: Product, quantity: number) {
+  function addProductToCart(product: IProduct, quantity: number) {
     const hasDifferentRestaurantProcut = cartProducts.some(
       (p) => p.restaurantId !== product.restaurantId,
     );

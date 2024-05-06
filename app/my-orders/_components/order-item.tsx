@@ -1,10 +1,16 @@
+"use client";
+
 import { Avatar, AvatarImage } from "@/app/_components/ui/avatar";
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent } from "@/app/_components/ui/card";
+import { CartContext } from "@/app/_context/cart";
+import { getProduct } from "@/app/_helpers/_actions/product";
 import { formatPrice } from "@/app/_helpers/price";
 import { OrderStatus, Prisma } from "@prisma/client";
 import { ChevronRightIcon } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useContext } from "react";
 
 interface OrderItemProps {
   order: Prisma.OrderGetPayload<{
@@ -20,6 +26,8 @@ interface OrderItemProps {
 }
 
 export default function OrderItem({ order }: OrderItemProps) {
+  const router = useRouter();
+
   const statusMap = {
     [OrderStatus.CONFIRMED]: {
       text: "Confirmado",
@@ -51,13 +59,23 @@ export default function OrderItem({ order }: OrderItemProps) {
     return status === OrderStatus.COMPLETED || status === OrderStatus.CANCELLED;
   }
 
+  const { addProductToCart } = useContext(CartContext);
+
+  async function handleRedoOrderClick() {
+    for (const orderProduct of order.products) {
+      const product = await getProduct(orderProduct.productId);
+      addProductToCart(product!, orderProduct.quantity);
+    }
+    router.push(`/restaurants/${order.restaurantId}`);
+  }
+
   return (
     <Card>
       <CardContent className="space-y-4 p-5">
         <div>
           <span
             className={
-              "w-fit rounded-full bg-muted px-2 py-1 text-xs font-semibold text-muted-foreground " +
+              "w-fit rounded-full px-2 py-1 text-xs font-semibold " +
               statusMap[order.status].className
             }
           >
@@ -103,6 +121,7 @@ export default function OrderItem({ order }: OrderItemProps) {
             className="text-sm"
             size="sm"
             disabled={!isOrderReadyToReorder(order.status)}
+            onClick={handleRedoOrderClick}
           >
             Refazer Pedido
           </Button>
