@@ -28,7 +28,7 @@ export default function CartBanner({ restaurantId }: CartBannerProps) {
   if (!restaurantHasProductsOnCart) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 w-full border-t bg-white p-5 pt-3 shadow-md">
+    <div className="fixed bottom-0 left-[50%] w-full max-w-[678px] translate-x-[-50%] border-t bg-white p-5 pt-3 shadow-md">
       <div className="flex items-center justify-between">
         {/* Price */}
         <div className="space-y-1">
