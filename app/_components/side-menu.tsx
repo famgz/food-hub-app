@@ -27,9 +27,18 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
+import { Category } from "@prisma/client";
 
-export default function SideMenu() {
+interface SideMenuProps {
+  categories: Category[];
+}
+
+export default function SideMenu({ categories }: SideMenuProps) {
   const { data, status } = useSession();
+
+  function getCategoryIdByName(categoryName: string): string {
+    return categories.find((c) => c.name === categoryName)?.id || "";
+  }
 
   return (
     <Sheet>
@@ -95,9 +104,12 @@ export default function SideMenu() {
                   <Button
                     variant="ghost"
                     className="w-full justify-start gap-3 rounded-full"
+                    asChild
                   >
-                    <HeartIcon size={16} />
-                    <span>Restaurantes Favoritos</span>
+                    <Link href={`/restaurants/recommended`}>
+                      <HeartIcon size={16} />
+                      <span>Restaurantes Favoritos</span>
+                    </Link>
                   </Button>
                 </>
               )}
@@ -107,58 +119,91 @@ export default function SideMenu() {
               <Button
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
+                asChild
               >
-                <UtensilsIcon size={16} />
-                <span>Pratos</span>
+                <Link
+                  href={`/categories/${getCategoryIdByName("Brasileira")}/products`}
+                >
+                  <UtensilsIcon size={16} />
+                  <span>Brasileira</span>
+                </Link>
               </Button>
 
               <Button
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
+                asChild
               >
-                <SandwichIcon size={16} />
-                <span>Lanches</span>
+                <Link
+                  href={`/categories/${getCategoryIdByName("Hambúrgueres")}`}
+                >
+                  <SandwichIcon size={16} />
+                  <span>Hambúrgueres</span>
+                </Link>
               </Button>
 
               <Button
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
+                asChild
               >
-                <PizzaIcon size={16} />
-                <span>Pizzas</span>
+                <Link
+                  href={`/categories/${getCategoryIdByName("Pizzas")}/products`}
+                >
+                  <PizzaIcon size={16} />
+                  <span>Pizzas</span>
+                </Link>
               </Button>
 
               <Button
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
+                asChild
               >
-                <FishIcon size={16} />
-                <span>Japonesa</span>
+                <Link
+                  href={`/categories/${getCategoryIdByName("Japonesa")}/products`}
+                >
+                  <FishIcon size={16} />
+                  <span>Japonesa</span>
+                </Link>
               </Button>
 
               <Button
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
+                asChild
               >
-                <IceCreamConeIcon size={16} />
-                <span>Sobremesas</span>
+                <Link
+                  href={`/categories/${getCategoryIdByName("Sobremesas")}/products`}
+                >
+                  <IceCreamConeIcon size={16} />
+                  <span>Sobremesas</span>
+                </Link>
               </Button>
 
               <Button
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
+                asChild
               >
-                <CherryIcon size={16} />
-                <span>Sucos</span>
+                <Link
+                  href={`/categories/${getCategoryIdByName("Sucos")}/products`}
+                >
+                  <CherryIcon size={16} />
+                  <span>Sucos</span>
+                </Link>
               </Button>
 
-              <Button
+              {/* <Button
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
+                asChild
               >
-                <CupSodaIcon size={16} />
-                <span>Refrigerantes</span>
-              </Button>
+                <Link href={`/categories/${getCategoryIdByName('Refrigerantes')}/products`}>
+                  <CupSodaIcon size={16} />
+                  <span>Refrigerantes</span>
+                </Link>
+              </Button> */}
             </div>
           </div>
 

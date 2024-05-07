@@ -2,8 +2,14 @@ import Image from "next/image";
 import Link from "next/link";
 import CartButton from "./buttons/cart-button";
 import SideMenu from "./side-menu";
+import { db } from "../_lib/prisma";
+import { convertToPlainObject } from "../_helpers/utils";
 
-export default function Header() {
+export default async function Header() {
+  let categories = await db.category.findMany();
+
+  categories = convertToPlainObject(categories);
+
   return (
     <div className="flex justify-between px-5 pt-6">
       <Link href="/">
@@ -11,7 +17,7 @@ export default function Header() {
       </Link>
       <div className="space-x-2">
         <CartButton />
-        <SideMenu />
+        <SideMenu categories={categories} />
       </div>
     </div>
   );
