@@ -1,11 +1,11 @@
-import BackButton from "@/app/_components/buttons/back-button";
-import { Button } from "@/app/_components/ui/button";
+import { isRestaurantFavorite } from "@/app/_helpers/restaurant";
 import { convertToPlainObject } from "@/app/_helpers/utils";
+import { authOptions } from "@/app/_lib/auth";
 import { db } from "@/app/_lib/prisma";
-import { HeartIcon } from "lucide-react";
-import Image from "next/image";
+import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 import RestaurantDetails from "./_components/restaurant-details";
+import RestaurantImage from "./_components/restaurant-image";
 
 interface RestaurantPage {
   params: {
@@ -35,30 +35,26 @@ export default async function RestaurantPage({
     return notFound();
   }
 
+  const session = await getServerSession(authOptions);
+  const userId = session?.user?.id;
+
+  let userFavoriteRestaurants = await db.userFavoriteRestaurant.findMany({
+    where: { userId },
+  });
+  userFavoriteRestaurants = convertToPlainObject(userFavoriteRestaurants);
+
+  const isFavorite = isRestaurantFavorite(userFavoriteRestaurants, id);
+
   return (
-    <div className="pb-20">
+    <div>
       {/* Product image */}
-      <div className="relative h-[250px] w-full">
-        <Image
-          src={restaurant.imageUrl}
-          alt={restaurant.name}
-          fill
-          className="object-cover"
-        />
-        <BackButton />
+      <RestaurantImage
+        userId={userId}
+        restaurant={restaurant}
+        isFavorite={isFavorite}
+      />
 
-        {/* {userId && ( */}
-        <Button
-          size="icon"
-          className="absolute right-4 top-4 z-10 size-10 rounded-full bg-gray-700 p-2"
-          // onClick={async () => await handleFavoriteClick()}
-        >
-          <HeartIcon size={20} fill="white" />
-        </Button>
-        {/* )} */}
-      </div>
-
-      <div className="relative z-50 -mt-5 overflow-hidden rounded-tl-3xl rounded-tr-3xl bg-background">
+      <div className="relative z-50 -mt-5 overflow-hidden rounded-tl-3xl rounded-tr-3xl bg-background pb-20">
         <RestaurantDetails restaurant={restaurant} />
       </div>
     </div>

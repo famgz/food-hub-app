@@ -12,6 +12,8 @@ import DeliveryIcon from "./icons/delivery-icon";
 import RatingBadge from "./rating-badge";
 import { Button } from "./ui/button";
 import { useSession } from "next-auth/react";
+import { isRestaurantFavorite } from "../_helpers/restaurant";
+import UseToggleFavoriteRestaurant from "../restaurants/_hooks/use-toggle-favorite-restaurant";
 
 interface RestaurantItemProps {
   restaurant: Restaurant;
@@ -27,28 +29,17 @@ export default function RestaurantItem({
   const { data } = useSession();
   const userId = data?.user?.id;
 
-  const isFavorite = userFavoriteRestaurants.some(
-    (ufr) => ufr.restaurantId === restaurant.id,
+  const isFavorite = isRestaurantFavorite(
+    userFavoriteRestaurants,
+    restaurant.id,
   );
-  const deliveryFee = Number(restaurant.deliveryFee);
+  const { handleFavoriteClick } = UseToggleFavoriteRestaurant({
+    userId,
+    restaurantId: restaurant.id,
+    isFavorite,
+  });
 
-  async function handleFavoriteClick() {
-    if (!userId) {
-      toast.error("Faça login para favoritar este restaurante");
-      return;
-    }
-    try {
-      await toggleFavoriteRestaurant(userId, restaurant.id);
-      toast.success(
-        isFavorite
-          ? "Restaurante removido dos favoritos"
-          : "Restaurante adicionado aos favoritos",
-      );
-    } catch (err) {
-      console.error(err);
-      toast.error("Erro ao favoritar restaurante");
-    }
-  }
+  const deliveryFee = Number(restaurant.deliveryFee);
 
   return (
     <div className={cn("min-w-[266px] max-w-[266px]", className)}>
