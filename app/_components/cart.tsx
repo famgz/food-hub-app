@@ -37,9 +37,19 @@ export default function Cart({ setIsOpen }: CartProps) {
   const restaurant = cartProducts[0]?.restaurant;
   const deliveryFee = Number(restaurant?.deliveryFee || 0);
 
+  async function handlePreCheckoutClick() {
+    if (!data?.user) {
+      toast.error("É preciso fazer login para finalizar o pedido", {
+        className: "mb-12",
+      });
+      return;
+    }
+    setIsConfirmationDialogOpen(true);
+  }
+
   async function handleCheckoutClick() {
     if (!data?.user) {
-      console.log("Cannot proceed with order. Not logged in");
+      toast.error("É preciso fazer login para finalizar o pedido'");
       return;
     }
 
@@ -154,7 +164,7 @@ export default function Cart({ setIsOpen }: CartProps) {
           <Button
             variant={"default"}
             className="w-full"
-            onClick={() => setIsConfirmationDialogOpen(true)}
+            onClick={handlePreCheckoutClick}
           >
             Finalizar Pedido
           </Button>
