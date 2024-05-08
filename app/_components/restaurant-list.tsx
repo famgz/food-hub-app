@@ -19,6 +19,7 @@ export default async function RestaurantList() {
   });
 
   restaurants = convertToPlainObject(restaurants);
+  userFavoriteRestaurants = convertToPlainObject(userFavoriteRestaurants);
 
   return (
     <>
@@ -39,7 +40,6 @@ export default async function RestaurantList() {
           <RestaurantItem
             restaurant={r}
             key={r.id}
-            userId={session?.user?.id}
             userFavoriteRestaurants={userFavoriteRestaurants}
           />
         ))}

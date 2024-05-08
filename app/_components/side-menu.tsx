@@ -106,7 +106,7 @@ export default function SideMenu({ categories }: SideMenuProps) {
                     className="w-full justify-start gap-3 rounded-full"
                     asChild
                   >
-                    <Link href={`/restaurants/recommended`}>
+                    <Link href={`/my-favorite-restaurants`}>
                       <HeartIcon size={16} />
                       <span>Restaurantes Favoritos</span>
                     </Link>

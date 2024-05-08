@@ -11,9 +11,9 @@ import { cn } from "../_lib/utils";
 import DeliveryIcon from "./icons/delivery-icon";
 import RatingBadge from "./rating-badge";
 import { Button } from "./ui/button";
+import { useSession } from "next-auth/react";
 
 interface RestaurantItemProps {
-  userId?: string;
   restaurant: Restaurant;
   className?: string;
   userFavoriteRestaurants: UserFavoriteRestaurant[];
@@ -21,10 +21,12 @@ interface RestaurantItemProps {
 
 export default function RestaurantItem({
   restaurant,
-  userId,
   userFavoriteRestaurants,
   className,
 }: RestaurantItemProps) {
+  const { data } = useSession();
+  const userId = data?.user?.id;
+
   const isFavorite = userFavoriteRestaurants.some(
     (ufr) => ufr.restaurantId === restaurant.id,
   );
@@ -62,6 +64,7 @@ export default function RestaurantItem({
         <div className="absolute left-2 top-2">
           <RatingBadge theme="light" />
         </div>
+        {/* Like button */}
         {userId && (
           <Button
             size="icon"
