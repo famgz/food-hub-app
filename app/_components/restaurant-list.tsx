@@ -1,16 +1,25 @@
-import { Restaurant } from "@prisma/client";
 import { ChevronRightIcon } from "lucide-react";
+import { getServerSession } from "next-auth";
 import Link from "next/link";
+import { convertToPlainObject } from "../_helpers/utils";
+import { authOptions } from "../_lib/auth";
+import { db } from "../_lib/prisma";
 import RestaurantItem from "./restaurant-item";
 import { Button } from "./ui/button";
 
-interface RestaurantsListProps {
-  restaurants: Restaurant[];
-}
+export default async function RestaurantList() {
+  const session = await getServerSession(authOptions);
 
-export default async function RestaurantList({
-  restaurants,
-}: RestaurantsListProps) {
+  let restaurants = await db.restaurant.findMany({
+    take: 10,
+  });
+
+  let userFavoriteRestaurants = await db.userFavoriteRestaurant.findMany({
+    where: { userId: session?.user?.id },
+  });
+
+  restaurants = convertToPlainObject(restaurants);
+
   return (
     <>
       <div className="flex items-center justify-between">
@@ -27,7 +36,12 @@ export default async function RestaurantList({
       </div>
       <div className="section-scroll mt-1">
         {restaurants.map((r) => (
-          <RestaurantItem restaurant={r} key={r.id} />
+          <RestaurantItem
+            restaurant={r}
+            key={r.id}
+            userId={session?.user?.id}
+            userFavoriteRestaurants={userFavoriteRestaurants}
+          />
         ))}
       </div>
     </>

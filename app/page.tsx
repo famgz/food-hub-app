@@ -22,12 +22,7 @@ export default async function Home() {
     distinct: "name",
   });
 
-  let restaurants = await db.restaurant.findMany({
-    take: 10,
-  });
-
   products = convertToPlainObject(products);
-  restaurants = convertToPlainObject(restaurants);
 
   return (
     <div className="pb-4">
@@ -64,7 +59,7 @@ export default async function Home() {
       </div>
 
       <div className="section !pr-0">
-        <RestaurantList restaurants={restaurants} />
+        <RestaurantList />
       </div>
     </div>
   );

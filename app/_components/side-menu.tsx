@@ -135,7 +135,7 @@ export default function SideMenu({ categories }: SideMenuProps) {
                 asChild
               >
                 <Link
-                  href={`/categories/${getCategoryIdByName("Hambúrgueres")}`}
+                  href={`/categories/${getCategoryIdByName("Hambúrgueres")}/products`}
                 >
                   <SandwichIcon size={16} />
                   <span>Hambúrgueres</span>

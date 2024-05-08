@@ -1,41 +1,76 @@
-import { Restaurant } from "@prisma/client";
-import { HeartIcon, StarIcon, TimerIcon } from "lucide-react";
+"use client";
+
+import { Restaurant, UserFavoriteRestaurant } from "@prisma/client";
+import { HeartIcon, TimerIcon } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import { toast } from "sonner";
+import { toggleFavoriteRestaurant } from "../_actions/restaurant";
 import { formatPrice } from "../_helpers/price";
-import { Button } from "./ui/button";
-import LikeButton from "./buttons/like-button";
-import RatingBadge from "./rating-badge";
-import DeliveryIcon from "./icons/delivery-icon";
 import { cn } from "../_lib/utils";
+import DeliveryIcon from "./icons/delivery-icon";
+import RatingBadge from "./rating-badge";
+import { Button } from "./ui/button";
 
 interface RestaurantItemProps {
+  userId?: string;
   restaurant: Restaurant;
   className?: string;
+  userFavoriteRestaurants: UserFavoriteRestaurant[];
 }
 
 export default function RestaurantItem({
   restaurant,
+  userId,
+  userFavoriteRestaurants,
   className,
 }: RestaurantItemProps) {
+  const isFavorite = userFavoriteRestaurants.some(
+    (ufr) => ufr.restaurantId === restaurant.id,
+  );
   const deliveryFee = Number(restaurant.deliveryFee);
 
+  async function handleFavoriteClick() {
+    if (!userId) {
+      toast.error("Faça login para favoritar este restaurante");
+      return;
+    }
+    try {
+      await toggleFavoriteRestaurant(userId, restaurant.id);
+      toast.success(
+        isFavorite
+          ? "Restaurante removido dos favoritos"
+          : "Restaurante adicionado aos favoritos",
+      );
+    } catch (err) {
+      console.error(err);
+      toast.error("Erro ao favoritar restaurante");
+    }
+  }
+
   return (
-    <Link
-      href={`/restaurants/${restaurant.id}`}
-      className={cn("min-w-[266px] max-w-[266px]", className)}
-    >
+    <div className={cn("min-w-[266px] max-w-[266px]", className)}>
       <div className="relative h-[150px] w-full overflow-hidden rounded-lg shadow-md">
-        <Image
-          src={restaurant.imageUrl}
-          alt={restaurant.name}
-          fill
-          className="object-cover"
-        />
+        <Link href={`/restaurants/${restaurant.id}`}>
+          <Image
+            src={restaurant.imageUrl}
+            alt={restaurant.name}
+            fill
+            className="object-cover"
+          />
+        </Link>
         <div className="absolute left-2 top-2">
           <RatingBadge theme="light" />
         </div>
-        <LikeButton iconSize={16} />
+        {userId && (
+          <Button
+            size="icon"
+            className={`absolute right-2 top-2 z-10 size-8 rounded-full bg-gray-700 ${isFavorite && "bg-primary hover:bg-gray-700"}`}
+            onClick={async () => await handleFavoriteClick()}
+          >
+            <HeartIcon size={16} fill="white" />
+          </Button>
+        )}
       </div>
 
       <div>
@@ -53,13 +88,13 @@ export default function RestaurantItem({
 
           {/* Delivery time */}
           <div className="flex items-center gap-1">
-            <TimerIcon className="text-primary" size={16} />
+            <TimerIcon className="text-primary" size={8} />
             <span className="text-xs text-muted-foreground">
               {restaurant.deliveryTimeMinutes} min
             </span>
           </div>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }

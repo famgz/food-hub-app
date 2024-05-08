@@ -4,7 +4,7 @@ import { Avatar, AvatarImage } from "@/app/_components/ui/avatar";
 import { Button } from "@/app/_components/ui/button";
 import { Card, CardContent } from "@/app/_components/ui/card";
 import { CartContext } from "@/app/_context/cart";
-import { getProduct } from "@/app/_helpers/_actions/product";
+import { getProduct } from "@/app/_actions/product";
 import { formatPrice } from "@/app/_helpers/price";
 import { OrderStatus, Prisma } from "@prisma/client";
 import { ChevronRightIcon } from "lucide-react";

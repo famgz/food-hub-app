@@ -1,7 +1,8 @@
 import BackButton from "@/app/_components/buttons/back-button";
-import LikeButton from "@/app/_components/buttons/like-button";
+import { Button } from "@/app/_components/ui/button";
 import { convertToPlainObject } from "@/app/_helpers/utils";
 import { db } from "@/app/_lib/prisma";
+import { HeartIcon } from "lucide-react";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import RestaurantDetails from "./_components/restaurant-details";
@@ -45,7 +46,16 @@ export default async function RestaurantPage({
           className="object-cover"
         />
         <BackButton />
-        <LikeButton iconSize={20} className="right-4 top-4 size-10 p-2" />
+
+        {/* {userId && ( */}
+        <Button
+          size="icon"
+          className="absolute right-4 top-4 z-10 size-10 rounded-full bg-gray-700 p-2"
+          // onClick={async () => await handleFavoriteClick()}
+        >
+          <HeartIcon size={20} fill="white" />
+        </Button>
+        {/* )} */}
       </div>
 
       <div className="relative z-50 -mt-5 overflow-hidden rounded-tl-3xl rounded-tr-3xl bg-background">

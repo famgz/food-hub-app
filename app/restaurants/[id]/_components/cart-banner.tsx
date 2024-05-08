@@ -46,9 +46,9 @@ export default function CartBanner({ restaurantId }: CartBannerProps) {
         </div>
         {/* Button */}
         <Sheet>
-          <SheetTrigger>
-            <Button size="lg">Ver Carrinho</Button>
-          </SheetTrigger>
+          <Button size="lg" asChild>
+            <SheetTrigger>Ver Carrinho</SheetTrigger>
+          </Button>
           <SheetContent className="cart-sheet-content">
             <SheetHeader>
               <SheetTitle>Carrinho</SheetTitle>

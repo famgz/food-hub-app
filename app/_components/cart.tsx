@@ -5,7 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useContext, useState } from "react";
 import { CartContext } from "../_context/cart";
-import { createOrder } from "../_helpers/_actions/order";
+import { createOrder } from "../_actions/order";
 import { formatPrice } from "../_helpers/price";
 import CartItem from "./cart-item";
 import {
