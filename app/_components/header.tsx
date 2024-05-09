@@ -3,12 +3,12 @@ import Link from "next/link";
 import CartButton from "./buttons/cart-button";
 import SideMenu from "./side-menu";
 import { db } from "../_lib/prisma";
-import { convertToPlainObject } from "../_helpers/utils";
+import { plainify } from "../_helpers/utils";
 
 export default async function Header() {
   let categories = await db.category.findMany();
 
-  categories = convertToPlainObject(categories);
+  categories = plainify(categories);
 
   return (
     <div className="flex justify-between px-5 pt-6">

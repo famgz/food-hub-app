@@ -1,6 +1,6 @@
 import Header from "@/app/_components/header";
 import ProductItem from "@/app/_components/product-item";
-import { convertToPlainObject } from "@/app/_helpers/utils";
+import { plainify } from "@/app/_helpers/utils";
 import { db } from "@/app/_lib/prisma";
 
 export default async function RecommendedProductsPage() {
@@ -20,7 +20,7 @@ export default async function RecommendedProductsPage() {
     distinct: "name",
   });
 
-  products = convertToPlainObject(products);
+  products = plainify(products);
 
   return (
     <>

@@ -1,6 +1,6 @@
 import Header from "@/app/_components/header";
 import RestaurantItem from "@/app/_components/restaurant-item";
-import { convertToPlainObject } from "@/app/_helpers/utils";
+import { plainify } from "@/app/_helpers/utils";
 import { authOptions } from "@/app/_lib/auth";
 import { db } from "@/app/_lib/prisma";
 import { getServerSession } from "next-auth";
@@ -13,7 +13,7 @@ export default async function RecomendedRestaurants() {
     where: { userId: session?.user?.id },
   });
 
-  userFavoriteRestaurants = convertToPlainObject(userFavoriteRestaurants);
+  userFavoriteRestaurants = plainify(userFavoriteRestaurants);
 
   return (
     <>

@@ -3,7 +3,7 @@ import { redirect } from "next/navigation";
 import Header from "../_components/header";
 import { db } from "../_lib/prisma";
 import OrderItem from "./_components/order-item";
-import { convertToPlainObject } from "../_helpers/utils";
+import { plainify } from "../_helpers/utils";
 import { authOptions } from "../_lib/auth";
 
 export default async function MyOrdersPage() {
@@ -25,7 +25,7 @@ export default async function MyOrdersPage() {
     },
   });
 
-  orders = convertToPlainObject(orders);
+  orders = plainify(orders);
 
   return (
     <>

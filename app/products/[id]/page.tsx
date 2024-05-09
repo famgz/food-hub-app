@@ -1,5 +1,5 @@
 import BackButton from "@/app/_components/buttons/back-button";
-import { convertToPlainObject } from "@/app/_helpers/utils";
+import { plainify } from "@/app/_helpers/utils";
 import { db } from "@/app/_lib/prisma";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -23,7 +23,7 @@ export default async function ProductPage({
     },
   });
 
-  product = convertToPlainObject(product);
+  product = plainify(product);
 
   if (!product) {
     return notFound();
@@ -49,7 +49,7 @@ export default async function ProductPage({
     distinct: "name",
   });
 
-  extraProducts = convertToPlainObject(extraProducts);
+  extraProducts = plainify(extraProducts);
 
   return (
     <div className="pb-5">

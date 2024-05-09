@@ -1,6 +1,6 @@
 "use server";
 
-import { convertToPlainObject } from "@/app/_helpers/utils";
+import { plainify } from "@/app/_helpers/utils";
 import { db } from "@/app/_lib/prisma";
 
 export async function searchForRestaurant(search: string) {
@@ -13,5 +13,5 @@ export async function searchForRestaurant(search: string) {
     },
   });
 
-  return convertToPlainObject(restaurants);
+  return plainify(restaurants);
 }

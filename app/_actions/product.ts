@@ -1,7 +1,7 @@
 "use server";
 
 import { db } from "@/app/_lib/prisma";
-import { convertToPlainObject } from "../_helpers/utils";
+import { plainify } from "../_helpers/utils";
 
 export async function getProduct(productId: string) {
   const product = await db.product.findUnique({
@@ -11,5 +11,5 @@ export async function getProduct(productId: string) {
       category: true,
     },
   });
-  return convertToPlainObject(product);
+  return plainify(product);
 }

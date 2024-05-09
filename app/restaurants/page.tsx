@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "../_lib/auth";
 import { db } from "../_lib/prisma";
 import Header from "../_components/header";
-import { convertToPlainObject } from "../_helpers/utils";
+import { plainify } from "../_helpers/utils";
 
 export default async function RestaurantsPage() {
   const session = await getServerSession(authOptions);
@@ -17,7 +17,7 @@ export default async function RestaurantsPage() {
     },
   });
 
-  userFavoriteRestaurants = convertToPlainObject(userFavoriteRestaurants);
+  userFavoriteRestaurants = plainify(userFavoriteRestaurants);
 
   return (
     <Suspense>

@@ -1,5 +1,5 @@
 import { isRestaurantFavorite } from "@/app/_helpers/restaurant";
-import { convertToPlainObject } from "@/app/_helpers/utils";
+import { plainify } from "@/app/_helpers/utils";
 import { authOptions } from "@/app/_lib/auth";
 import { db } from "@/app/_lib/prisma";
 import { getServerSession } from "next-auth";
@@ -29,7 +29,7 @@ export default async function RestaurantPage({
     },
   });
 
-  restaurant = convertToPlainObject(restaurant);
+  restaurant = plainify(restaurant);
 
   if (!restaurant) {
     return notFound();
@@ -41,7 +41,7 @@ export default async function RestaurantPage({
   let userFavoriteRestaurants = await db.userFavoriteRestaurant.findMany({
     where: { userId },
   });
-  userFavoriteRestaurants = convertToPlainObject(userFavoriteRestaurants);
+  userFavoriteRestaurants = plainify(userFavoriteRestaurants);
 
   const isFavorite = isRestaurantFavorite(userFavoriteRestaurants, id);
 

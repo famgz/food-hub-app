@@ -4,7 +4,7 @@ import ProductsList from "./_components/products-list";
 import PromoBanner from "./_components/promo-banner";
 import RestaurantList from "./_components/restaurant-list";
 import Search from "./_components/search";
-import { convertToPlainObject } from "./_helpers/utils";
+import { plainify } from "./_helpers/utils";
 import { db } from "./_lib/prisma";
 
 async function fetch() {
@@ -40,7 +40,7 @@ async function fetch() {
     getPizzaCategory,
   ]);
 
-  return { products, burgerCategory, pizzaCategory };
+  return plainify({ products, burgerCategory, pizzaCategory });
 }
 
 export default async function Home() {

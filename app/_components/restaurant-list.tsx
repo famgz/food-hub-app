@@ -1,7 +1,7 @@
 import { ChevronRightIcon } from "lucide-react";
 import { getServerSession } from "next-auth";
 import Link from "next/link";
-import { convertToPlainObject } from "../_helpers/utils";
+import { plainify } from "../_helpers/utils";
 import { authOptions } from "../_lib/auth";
 import { db } from "../_lib/prisma";
 import RestaurantItem from "./restaurant-item";
@@ -18,8 +18,8 @@ export default async function RestaurantList() {
     where: { userId: session?.user?.id },
   });
 
-  restaurants = convertToPlainObject(restaurants);
-  userFavoriteRestaurants = convertToPlainObject(userFavoriteRestaurants);
+  restaurants = plainify(restaurants);
+  userFavoriteRestaurants = plainify(userFavoriteRestaurants);
 
   return (
     <>

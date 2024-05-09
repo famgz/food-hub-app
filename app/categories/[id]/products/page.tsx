@@ -1,6 +1,6 @@
 import Header from "@/app/_components/header";
 import ProductItem from "@/app/_components/product-item";
-import { convertToPlainObject } from "@/app/_helpers/utils";
+import { plainify } from "@/app/_helpers/utils";
 import { db } from "@/app/_lib/prisma";
 import { notFound } from "next/navigation";
 
@@ -34,7 +34,7 @@ export default async function CategoryPage({
     },
   });
 
-  category = convertToPlainObject(category);
+  category = plainify(category);
 
   if (!category) {
     return notFound();

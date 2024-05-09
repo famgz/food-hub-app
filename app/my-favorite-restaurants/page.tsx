@@ -2,7 +2,7 @@ import { getServerSession } from "next-auth";
 import { notFound } from "next/navigation";
 import Header from "../_components/header";
 import RestaurantItem from "../_components/restaurant-item";
-import { convertToPlainObject } from "../_helpers/utils";
+import { plainify } from "../_helpers/utils";
 import { authOptions } from "../_lib/auth";
 import { db } from "../_lib/prisma";
 
@@ -22,7 +22,7 @@ export default async function MyFavoriteRestaurantsPage() {
     },
   });
 
-  userFavoriteRestaurants = convertToPlainObject(userFavoriteRestaurants);
+  userFavoriteRestaurants = plainify(userFavoriteRestaurants);
 
   return (
     <>

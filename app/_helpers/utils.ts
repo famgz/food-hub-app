@@ -1,3 +1,3 @@
-export function convertToPlainObject(item: any) {
+export function plainify(item: any) {
   return JSON.parse(JSON.stringify(item));
 }
