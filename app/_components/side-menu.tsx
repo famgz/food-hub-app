@@ -84,6 +84,7 @@ export default function SideMenu({ categories }: SideMenuProps) {
                 variant="ghost"
                 className="w-full justify-start gap-3 rounded-full"
               >
+                <Link href="/"></Link>
                 <HomeIcon size={16} />
                 <span>Início</span>
               </Button>

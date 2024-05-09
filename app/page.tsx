@@ -7,8 +7,8 @@ import Search from "./_components/search";
 import { convertToPlainObject } from "./_helpers/utils";
 import { db } from "./_lib/prisma";
 
-export default async function Home() {
-  let products = await db.product.findMany({
+async function fetch() {
+  const getProducts = db.product.findMany({
     where: {
       discountPercentage: {
         gt: 0,
@@ -22,7 +22,29 @@ export default async function Home() {
     distinct: "name",
   });
 
-  products = convertToPlainObject(products);
+  const getBurgerCategory = db.category.findFirst({
+    where: {
+      name: "Hambúrgueres",
+    },
+  });
+
+  const getPizzaCategory = db.category.findFirst({
+    where: {
+      name: "Pizzas",
+    },
+  });
+
+  const [products, burgerCategory, pizzaCategory] = await Promise.all([
+    getProducts,
+    getBurgerCategory,
+    getPizzaCategory,
+  ]);
+
+  return { products, burgerCategory, pizzaCategory };
+}
+
+export default async function Home() {
+  const { products, burgerCategory, pizzaCategory } = await fetch();
 
   return (
     <div className="pb-4">
@@ -38,8 +60,9 @@ export default async function Home() {
 
       <div className="section">
         <PromoBanner
-          src="/promo-banner-01.png"
-          alt="Até 30% de descontos em pizzas"
+          imageUrl="/promo-banner-01.png"
+          imageAlt="Até 30% de descontos em pizzas"
+          url={`/categories/${pizzaCategory!.id}/products`}
         />
       </div>
 
@@ -53,8 +76,9 @@ export default async function Home() {
 
       <div className="section">
         <PromoBanner
-          src="/promo-banner-02.png"
-          alt="A partir de R$17,90 em lanches"
+          imageUrl="/promo-banner-02.png"
+          imageAlt="A partir de R$17,90 em lanches"
+          url={`/categories/${burgerCategory!.id}/products`}
         />
       </div>
 
