@@ -203,11 +203,11 @@ export default function ProductDetails({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Ops, seu carrinho não está vazio!
+              Ops! Este produto pertence a outro restaurante.
             </AlertDialogTitle>
             <AlertDialogDescription>
-              Deseja mesmo adicionar este item? Esta ação irá remover produtos
-              de outros restaurantes do seu carrinho.
+              Deseja mesmo adicionar este item? Esta ação irá limpar o seu
+              carrinho.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
