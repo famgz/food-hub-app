@@ -11,9 +11,9 @@ export default async function Header() {
   categories = plainify(categories);
 
   return (
-    <div className="flex justify-between px-5 pt-6">
-      <Link href="/">
-        <Image src="/logo.svg" alt="Food Hub" height={30} width={100} />
+    <div className="flex justify-between px-5 pt-5">
+      <Link href="/" className="flex items-center">
+        <Image src="/logo.svg" alt="Food Hub" height={36} width={120} />
       </Link>
       <div className="space-x-2">
         <CartButton />
