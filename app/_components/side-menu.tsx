@@ -1,8 +1,8 @@
 "use client";
 
+import { Category } from "@prisma/client";
 import {
   CherryIcon,
-  CupSodaIcon,
   FishIcon,
   HeartIcon,
   HomeIcon,
@@ -27,7 +27,6 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "./ui/sheet";
-import { Category } from "@prisma/client";
 
 interface SideMenuProps {
   categories: Category[];

@@ -1,9 +1,7 @@
 import DeliveryInfoCard from "@/app/_components/delivery-info-card";
 import ProductsList from "@/app/_components/products-list";
 import RatingBadge from "@/app/_components/rating-badge";
-import { plainify } from "@/app/_helpers/utils";
-import { db } from "@/app/_lib/prisma";
-import { Prisma, Product, Restaurant } from "@prisma/client";
+import { Prisma } from "@prisma/client";
 import Image from "next/image";
 import CartBanner from "./cart-banner";
 

@@ -1,9 +1,9 @@
+import { Toaster } from "@/app/_components/ui/sonner";
 import type { Metadata } from "next";
-import { Inter, Poppins } from "next/font/google";
-import "./globals.css";
+import { Poppins } from "next/font/google";
 import { CartProvider } from "./_context/cart";
 import AuthProvider from "./_providers/auth";
-import { Toaster } from "@/app/_components/ui/sonner";
+import "./globals.css";
 
 const poppins = Poppins({
   subsets: ["latin"],
