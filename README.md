@@ -1,8 +1,6 @@
 ## Food Hub App
 
-### Tecnologias utilizadas
-
-<br>
+### Tecnologias utilizadas:
 
 <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/react/react-original.svg" alt="React Logo" width="16"/> React
 
