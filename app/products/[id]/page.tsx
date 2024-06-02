@@ -1,10 +1,10 @@
 import BackButton from "@/app/_components/buttons/back-button";
+import HomeButton from "@/app/_components/buttons/home-button";
 import { plainify } from "@/app/_helpers/utils";
 import { db } from "@/app/_lib/prisma";
 import Image from "next/image";
 import { notFound } from "next/navigation";
 import ProductDetails from "./_components/product-details";
-import HomeButton from "@/app/_components/buttons/home-button";
 
 interface ProductPageProps {
   params: {

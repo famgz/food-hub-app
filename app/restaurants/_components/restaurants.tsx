@@ -1,9 +1,9 @@
 "use client";
 
+import RestaurantItem from "@/app/_components/restaurant-item";
 import { Restaurant, UserFavoriteRestaurant } from "@prisma/client";
 import { notFound, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import RestaurantItem from "@/app/_components/restaurant-item";
 import { searchForRestaurant } from "../_actions/search";
 
 interface RestaurantProps {

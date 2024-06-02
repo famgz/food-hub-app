@@ -1,11 +1,11 @@
 "use client";
 
-import { Restaurant } from "@prisma/client";
-import UseToggleFavoriteRestaurant from "../../_hooks/use-toggle-favorite-restaurant";
-import Image from "next/image";
 import BackButton from "@/app/_components/buttons/back-button";
 import { Button } from "@/app/_components/ui/button";
+import { Restaurant } from "@prisma/client";
 import { HeartIcon } from "lucide-react";
+import Image from "next/image";
+import UseToggleFavoriteRestaurant from "../../_hooks/use-toggle-favorite-restaurant";
 
 interface RestaurantImageProps {
   restaurant: Restaurant;
